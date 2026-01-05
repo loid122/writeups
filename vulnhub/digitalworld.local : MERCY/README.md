@@ -8,7 +8,7 @@ PORT     STATE SERVICE      REASON\
 445/tcp  open  microsoft-ds syn-ack ttl 64\
 993/tcp  open  imaps        syn-ack ttl 64\
 995/tcp  open  pop3s        syn-ack ttl 64\
-8080/tcp open  http-proxy   syn-ack ttl 64\
+8080/tcp open  http-proxy   syn-ack ttl 64
 
 lets fire up burpsuite and access port 8080\
 <img width="1692" height="439" alt="image" src="https://github.com/user-attachments/assets/1a0b4ddb-442e-4eda-9760-774d617cc1ce" />
