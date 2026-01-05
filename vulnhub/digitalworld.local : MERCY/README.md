@@ -144,16 +144,12 @@ successfully gives us the contents of /etc/passwd
 from the home page of port 8080 we know that the users is located at /etc/tomcat7/tomcat-users.xml
 \
 we get 
-\
 <? <role rolename="admin-gui"/>
-\
 <? <role rolename="manager-gui"/>
-\
 <? <user username="thisisasuperduperlonguser" password="heartbreakisinevitable" roles="admin-gui,manager-gui"/>
-\
 <? <user username="fluffy" password="freakishfluffybunny" roles="none"/>
-\
 
+\
 so we login with thisisasuperduperlonguser:heartbreakisinevitable at /manager/html
 \
 which leads us to home page of apache tomcat where we can deploy a WAR file to get a reverse shell 
