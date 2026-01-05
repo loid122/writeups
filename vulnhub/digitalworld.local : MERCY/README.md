@@ -48,7 +48,6 @@ i go through the files\
 but i check configprint\
 <img width="703" height="310" alt="image" src="https://github.com/user-attachments/assets/6174a69b-b7f5-464c-a94a-eb7011e59ae0" />\
 i see that a lot of configurations have been appended to config file\
-
 so when i check that\
 we can see that when we knock specific ports on the machine , it does some actions like opening/closing of http and ssh\
 <img width="669" height="467" alt="image" src="https://github.com/user-attachments/assets/7e7f9a1a-f8ce-4330-ae50-280eb364777b" />\
