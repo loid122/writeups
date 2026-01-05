@@ -1,4 +1,4 @@
-<img width="1362" height="452" alt="image" src="https://github.com/user-attachments/assets/0e76f5e6-40fe-43bb-b91a-a6c9168b499f" /># Fristileaks 1.3
+# Fristileaks 1.3 writeup
 ```bash
 rustscan -a 192.168.1.13
 ```
