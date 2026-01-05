@@ -55,12 +55,12 @@ we can see that when we knock specific ports on the machine , it does some actio
 after knocking the ports \
 knock 192.168.1.9 159 27391 4 -v\
 
-we can see that port 80 is open when accessed we get\
+we can see that port 80 is open when accessed we get
 <img width="493" height="99" alt="image" src="https://github.com/user-attachments/assets/b496ef44-52c3-4940-8f5e-b8d33a73c0f5" />\
 
 after running dirb on port 80\
 we get /time\
-which just shows current time\
+which just shows current time
 <img width="397" height="53" alt="image" src="https://github.com/user-attachments/assets/dea11ead-c3c0-4d6d-a419-8fb66174fd50" />\
 nothing much to do here\
 
@@ -83,7 +83,7 @@ after checking searchsploit \
 we see that this ver has an lfi vuln\
 <img width="659" height="428" alt="image" src="https://github.com/user-attachments/assets/7dc32afc-f023-446f-b500-119b9ac6e7a1" />\
 
-so accessing http://192.168.1.9/nomercy/windows/code.php?file=../../../../../../etc/passwd\
+so accessing http://192.168.1.9/nomercy/windows/code.php?file=../../../../../../etc/passwd
 successfully gives us the contents of /etc/passwd\
 
 from the home page of port 8080 we know that the users is located at /etc/tomcat7/tomcat-users.xml\
