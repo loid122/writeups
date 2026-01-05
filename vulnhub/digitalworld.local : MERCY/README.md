@@ -35,14 +35,13 @@ No fluffy bunnies for those who set insecure passwords and endanger the enterpri
 So its safe to assume that somewhere some user has the password "password"
 \
 both /manager/html and /host-manager/html were unaccessible with 401
-
+\
 i tried some bruteforcing , but no result
-
-
+\
 we see that smb is open on the target machine
 \
 ```bash
-so we use smbmap -H 192.168.1.9
+smbmap -H 192.168.1.9
 ```
 \
 
