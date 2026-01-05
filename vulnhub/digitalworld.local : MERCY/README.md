@@ -22,9 +22,9 @@ after decoding we get\
 
 Once, we found the password "password", quite literally sticking on a post-it in front of an employee's desk! As silly as it may be, the employee pleaded for mercy when we threatened to fire her.
 
-No fluffy bunnies for those who set insecure passwords and endanger the enterprise."\
+No fluffy bunnies for those who set insecure passwords and endanger the enterprise."
 
-So its safe to assume that somewhere some user has the password "password"\
+So its safe to assume that somewhere some user has the password "password"
 
 both /manager/html and /host-manager/html were unaccessible with 401\
 i tried some bruteforcing , but no result\
