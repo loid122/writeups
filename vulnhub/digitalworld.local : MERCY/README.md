@@ -113,10 +113,14 @@ after some enum , we find a local.txt file at root\
 
 then i realise , we can change to user fluffy with fluffy:freakishfluffybunny\
 
-after enumerating , we find a file timeclock\
+after enumerating , we find a file timeclock
+
 <img width="587" height="115" alt="image" src="https://github.com/user-attachments/assets/d25a9781-b975-48f9-9ae3-6d38091da7a3" />\
+
 it is owned by root\
+
 and when i checked it was updating it every 3 mins , which means , the script was bring run every 3 minutes \
+
 <img width="410" height="97" alt="image" src="https://github.com/user-attachments/assets/b2cf854b-0b76-448a-98b9-e9956f70fa96" />\
 
 since we have write permissions , we can add another line to give us a reverse shell\
