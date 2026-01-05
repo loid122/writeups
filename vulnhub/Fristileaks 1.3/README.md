@@ -2,6 +2,8 @@
 ```bash
 rustscan -a 192.168.1.13
 ```
+Only port 80 open
+\
 Home page
 <img width="1281" height="813" alt="image" src="https://github.com/user-attachments/assets/ae8dc793-97f8-4b8a-bb79-a0763b79b389" />
 \
