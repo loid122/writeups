@@ -11,11 +11,13 @@ after visiting robots.txt file
 \
 <img width="437" height="157" alt="image" src="https://github.com/user-attachments/assets/6587dea4-3097-40f5-abec-aabf8221d9d3" />
 \
-all of the endpoints troll us, so we think , what is cola , beer and sisi  
-\
-they are drinks and when we see the picture on home page it says to drink "fristi" , so lets go to /fristi endpoint
+all of the endpoints troll us
 \
 <img width="511" height="471" alt="image" src="https://github.com/user-attachments/assets/68126261-6728-42ce-a77b-06acdaacca70" />
+\
+so we think , what is cola , beer and sisi  
+\
+they are drinks and when we see the picture on home page it says to drink "fristi" , so lets go to /fristi endpoint
 \
 <img width="1157" height="715" alt="image" src="https://github.com/user-attachments/assets/ac405541-71e1-4000-a197-96b6e540eb6c" />
 \
