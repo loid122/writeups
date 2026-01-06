@@ -53,7 +53,7 @@ proxychains ssh john@192.168.1.13 -t '/bin/sh'
 \
 we can notice that at the end of .bashrc file there is an "exit" which was why our connection was closing 
 \
-since .bashrc is a configuratio file that runs everytime a new bash shell opens , so it was basically opening and exiting.
+since .bashrc is a configuration file that runs everytime a new bash shell opens , so it was basically opening and exiting.
 \
 <img width="275" height="58" alt="image" src="https://github.com/user-attachments/assets/9da0f0f8-cb8b-426f-aa16-3407a1755966" />
 \
@@ -62,7 +62,7 @@ We can just remove the last "exit" line and ssh again using
 proxychains ssh john@192.168.1.13
 ```
 \
-This time we have a stable shell, now we enumerate the fle system , we find a login.php at /var/www
+This time we have a stable shell, now we enumerate the file system , we find a login.php at /var/www
 \
 <img width="802" height="554" alt="image" src="https://github.com/user-attachments/assets/f3b35329-867c-4782-a5eb-1d8639166f68" />
 \
