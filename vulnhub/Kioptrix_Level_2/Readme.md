@@ -1,4 +1,4 @@
-# Kioptrix_Leve_2 writeup
+# Kioptrix_Level_2 writeup
 
 first we start with network scanning
 ```bash
