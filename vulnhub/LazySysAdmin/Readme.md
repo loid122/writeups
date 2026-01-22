@@ -13,6 +13,17 @@ We start with a network scan
  10.111.157.58   d8:a8:81:42:0c:eb      1      60  Unknown vendor
 ```
 \
+Then we scan for open ports
+```bash
+PORT     STATE SERVICE      REASON
+22/tcp   open  ssh          syn-ack ttl 64
+80/tcp   open  http         syn-ack ttl 64
+139/tcp  open  netbios-ssn  syn-ack ttl 64
+445/tcp  open  microsoft-ds syn-ack ttl 64
+3306/tcp open  mysql        syn-ack ttl 64
+6667/tcp open  irc          syn-ack ttl 64
+```
+\
 We see that smb is open , so lets use smbmap to scan
 ```bash
 smbmap -H 10.111.157.105            
