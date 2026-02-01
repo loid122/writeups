@@ -146,7 +146,7 @@ It gave password of user "notadmin" and from this user tab , we can see that "no
 \
 <img width="1514" height="477" alt="image" src="https://github.com/user-attachments/assets/3a73aa04-6b69-474a-8a62-39497277e730" />
 \
-And i try to edit a theme file with a reverse shell payload , but doesnt work 
+So , we login as "notadmin" with the found password and i try to edit a theme file with a reverse shell payload , but doesnt work 
 \
 So i download a wordpress theme and replace content of a file like "404.php" with reverse shell payload and zip the folder and upload it into wordpress website and then activate it 
 \
