@@ -293,7 +293,7 @@ Here we can see that Port 8080 and 3306 are open , but only accessible locally
 \
 So , i try to curl to port 8080
 ```bash
-url 127.0.0.1:8080
+curl 127.0.0.1:8080
 <!DOCTYPE html>
 <html>
 <head>
