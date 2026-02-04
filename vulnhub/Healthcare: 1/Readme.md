@@ -43,55 +43,7 @@ Then i tried the shellshock vuln on that page
 But i just could not get command injection ,Then i sit and enumerate with a bigger wordlist 
 Then at almost the end of this wordlist , i get a new endpoint
 ```bash
-ffuf -u http://192.168.0.107/FUZZ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt -r   
-
-        /'___\  /'___\           /'___\       
-       /\ \__/ /\ \__/  __  __  /\ \__/       
-       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
-        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
-         \ \_\   \ \_\  \ \____/  \ \_\       
-          \/_/    \/_/   \/___/    \/_/       
-
-       v2.1.0-dev
-________________________________________________
-
- :: Method           : GET
- :: URL              : http://192.168.0.107/FUZZ
- :: Wordlist         : FUZZ: /usr/share/wordlists/SecLists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt
- :: Follow redirects : true
- :: Calibration      : false
- :: Timeout          : 10
- :: Threads          : 40
- :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
-________________________________________________
-
-                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 1ms]
-index                   [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 5ms]
-  on at least 1 host    [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 6ms]
-images                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
-
-css                     [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
-js                      [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 4ms]
-vendor                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
-robots                  [Status: 200, Size: 620, Words: 60, Lines: 20, Duration: 0ms]
-favicon                 [Status: 200, Size: 1406, Words: 3, Lines: 2, Duration: 47ms]
-                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 543ms]
-  Priority-ordered case-sensitive list, where entries were found [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 554ms]
-                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 588ms]
-                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 592ms]
-  Copyright 2007 James Fisher [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 594ms]
-  directory-list-2.3-big.txt [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 596ms]
-  Suite 300, San Francisco, California, 94105, USA. [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 604ms]
-                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 620ms]
-  or send a letter to Creative Commons, 171 Second Street, [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 636ms]
-fonts                   [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 57ms]
-gitweb                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
-                        [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 0ms]
-phpMyAdmin              [Status: 403, Size: 59, Words: 4, Lines: 1, Duration: 0ms]
-server-status           [Status: 403, Size: 999, Words: 101, Lines: 43, Duration: 0ms]
-server-info             [Status: 403, Size: 999, Words: 101, Lines: 43, Duration: 0ms]
 openemr                 [Status: 200, Size: 131, Words: 2, Lines: 6, Duration: 2ms]
- Progress: [1273832/1273832] :: Job [1/1] :: 3225 req/sec :: Duration: [0:06:07] :: Errors: 0 
 ```
 \
 So , i visit /openemr , it redirects me to
