@@ -68,13 +68,11 @@ ________________________________________________
  :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
 ________________________________________________
 
-#                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 1ms]
+                       [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 1ms]
 index                   [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 5ms]
 # on at least 1 host    [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 6ms]
 images                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
-# license, visit http://creativecommons.org/licenses/by-sa/3.0/ [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 13ms]
-# Attribution-Share Alike 3.0 License. To view a copy of this [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 18ms]
-# This work is licensed under the Creative Commons [Status: 200, Size: 5031, Words: 182, Lines: 121, Duration: 24ms]
+
 css                     [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
 js                      [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 4ms]
 vendor                  [Status: 403, Size: 1013, Words: 102, Lines: 43, Duration: 1ms]
