@@ -40,10 +40,7 @@ Then i tried the shellshock vuln on that page
 \
 <img width="1348" height="650" alt="image" src="https://github.com/user-attachments/assets/58b31fde-7e14-42b7-a90a-71f72f9b0925" />
 \
-But i just could not get command injection
-\
-Then i sit and enumerate with a bigger wordlist 
-\
+But i just could not get command injection ,Then i sit and enumerate with a bigger wordlist 
 Then at almost the end of this wordlist , i get a new endpoint
 ```bash
 ffuf -u http://192.168.0.107/FUZZ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/DirBuster-2007_directory-list-2.3-big.txt -r   
@@ -94,7 +91,7 @@ phpMyAdmin              [Status: 403, Size: 59, Words: 4, Lines: 1, Duration: 0m
 server-status           [Status: 403, Size: 999, Words: 101, Lines: 43, Duration: 0ms]
 server-info             [Status: 403, Size: 999, Words: 101, Lines: 43, Duration: 0ms]
 openemr                 [Status: 200, Size: 131, Words: 2, Lines: 6, Duration: 2ms]
-:: Progress: [1273832/1273832] :: Job [1/1] :: 3225 req/sec :: Duration: [0:06:07] :: Errors: 0 ::
+ Progress: [1273832/1273832] :: Job [1/1] :: 3225 req/sec :: Duration: [0:06:07] :: Errors: 0 
 ```
 \
 So , i visit /openemr , it redirects me to
