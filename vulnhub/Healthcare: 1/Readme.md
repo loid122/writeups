@@ -1,4 +1,4 @@
-  Healthcare: 1 Writeup
+# Healthcare: 1 Writeup
 
 Description:
 \
@@ -8,7 +8,7 @@ Description:This machine was developed to train the student to think according t
 
 It is boot2root, tested on VirtualBox (but works on VMWare) and has two flags: user.txt and root.txt.
 
-  Exploitation
+ # Exploitation
 Let's start with network scan
 ```bash
 Currently scanning: 192.168.0.105/24   |   Screen View: Unique Hosts                                                                                                                                         
