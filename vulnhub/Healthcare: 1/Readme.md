@@ -42,6 +42,8 @@ Then i tried the shellshock vuln on that page
 \
 But i just could not get command injection ,Then i sit and enumerate with a bigger wordlist 
 Then at almost the end of this wordlist , i get a new endpoint
+\
+
 ```bash
 openemr                 [Status: 200, Size: 131, Words: 2, Lines: 6, Duration: 2ms]
 ```
