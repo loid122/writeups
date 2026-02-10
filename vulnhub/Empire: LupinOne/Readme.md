@@ -122,7 +122,7 @@ Opening it shows some encoded data
 \
 <img width="1717" height="467" alt="image" src="https://github.com/user-attachments/assets/1fe90db1-3820-41ec-a0f9-a21cd91e6d5d" />
 \
-i thought it was base64 encoded and tried decoding , but it gave waste data, so i had to run it through this "dcode.fr/cipher-identifier"
+i thought it was base64 encoded and tried decoding , but it gave waste data, so i had to run it through this "[dcode.fr/cipher-identifier](https://www.dcode.fr/cipher-identifier)"
 \
 <img width="997" height="549" alt="image" src="https://github.com/user-attachments/assets/5ad1db22-db46-410e-a47c-75f9f0ce8dc6" />
 \
