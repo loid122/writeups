@@ -61,12 +61,7 @@ This is basically brainfuck language, and we can just use compilers online
 So ,we have a password but not a username , so i run 
 ```bash
 enum4linux -a 192.168.0.112
-```
-\
-Which gives
-```bash
-[+] Enumerating users using SID S-1-22-1 and logon username '', password ''                                                                                                                                        
-                                                                                                                                                                                                                   
+[+] Enumerating users using SID S-1-22-1 and logon username '', password ''                                                                                                                                     
 S-1-22-1-1000 Unix User\cyber (Local User)
 ```
 \
