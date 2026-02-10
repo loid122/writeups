@@ -58,8 +58,8 @@ This is basically brainfuck language, and we can just use compilers online
 
 <img width="984" height="292" alt="image" src="https://github.com/user-attachments/assets/6a4b6178-9909-4489-a752-52c05a7e4c91" />
 \
-So, we have a password but not a username, so I run it and get:  
-"Unix User\\cyber (Local User)"  
+So, we have a password but not a username, so I run it and get:<br>
+"Unix User\\cyber (Local User)"<br>
 Now, I try to log in to the service on port 20000 with the credentials.
 <img width="229" height="766" alt="image" src="https://github.com/user-attachments/assets/ac6994fc-2813-42cb-8bdc-c97f946cb806" />
 \
