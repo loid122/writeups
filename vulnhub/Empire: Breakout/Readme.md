@@ -9,7 +9,7 @@ For hints discord Server ( https://discord.gg/7asvAhCEhe )
 ```
 \
 
-#Exploitation
+# Exploitation
 Let's start with a network scan
 ```bash
  Currently scanning: 192.168.0.111/24   |   Screen View: Unique Hosts                                                                                                                                             
