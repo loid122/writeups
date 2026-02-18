@@ -26,6 +26,8 @@ Currently scanning: Finished!   |   Screen View: Unique Hosts
 \
 NExt, open ports
 ```bash
+Port 22 ssh
+Port 80 Apache html
 ```
 \
 accessing port 80 on browser
