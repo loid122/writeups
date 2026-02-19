@@ -1,4 +1,4 @@
-<img width="1587" height="592" alt="image" src="https://github.com/user-attachments/assets/85259224-4b69-4312-aaee-6bd4d77c3a42" /># Momentum: 1 Writeup
+# Momentum: 1 Writeup
 # Description
 ```bash
 Info: easy / medium
@@ -26,7 +26,7 @@ Next, Open ports
 \
 Accessing port 80 on browser
 \
-![Uploading image.png…]
+<img width="1587" height="592" alt="image" src="https://github.com/user-attachments/assets/85259224-4b69-4312-aaee-6bd4d77c3a42" />
 \
 After checking a bit , we discover main.js here
 \
