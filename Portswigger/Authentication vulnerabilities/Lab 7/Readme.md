@@ -1,4 +1,4 @@
-# Lab
+# Lab: 2FA broken logic
 First when we login with our own creds , we see that server is settign 2 cookies and we get 2FA on our email server , which proves that we are getting a code
 \
 <img width="1374" height="584" alt="image" src="https://github.com/user-attachments/assets/d5a404b6-3f5a-496c-92e5-56504d061489" />
