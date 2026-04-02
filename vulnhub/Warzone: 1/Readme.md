@@ -273,3 +273,7 @@ I tried entering a random pin
 <img width="1189" height="292" alt="image" src="https://github.com/user-attachments/assets/81036bff-19c3-43c8-ae9a-8f333d08eac4" />
 \
 I think there is a limit to number of attempts ("Exhaust") and its also verifying the auth.
+\
+This is default debugger of python flask console , so i dont think this is the intended way
+\
+We have to guess username and password , and the password should be encrypted using the given encrypt.jar, so i am leaving it here for now.
