@@ -1,4 +1,4 @@
-<img width="394" height="44" alt="image" src="https://github.com/user-attachments/assets/e3eaf257-ec8e-4fea-8952-4472aa20f12d" /># KB-VULN: 4 FINAL Walkthrough
+# KB-VULN: 4 FINAL Walkthrough
 
 # Description
 ```bash
