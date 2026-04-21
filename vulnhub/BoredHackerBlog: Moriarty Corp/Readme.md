@@ -1,4 +1,4 @@
-<img width="1071" height="349" alt="image" src="https://github.com/user-attachments/assets/e2fa1bce-54a7-47c3-8cfb-77b312cac185" /># BoredHackerBlog: Moriarty Corp Walkthrough
+# BoredHackerBlog: Moriarty Corp Walkthrough
 
 # Description
 ```bash
