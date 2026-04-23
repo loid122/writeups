@@ -56,11 +56,12 @@ When i entered a random endpoint to access
 \
 Since the page was displaying the "path i gave after /" i thought it could be SSTI and tested it
 \
-And it was Jinja ssti and i followed "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Python.md"
+And it was Jinja ssti 
 \
-<img width="1702" height="690" alt="image" src="https://github.com/user-attachments/assets/15504597-75d9-430c-995e-cbb3cb6f9950" />
+<img width="569" height="761" alt="image" src="https://github.com/user-attachments/assets/f8046543-7173-446a-a859-4107156f6f79" />
 \
-
+And i followed "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Python.md" for further payloads
+\
 When i first checked if i could access the builtin functions and see which all were supported
 \
 <img width="519" height="124" alt="image" src="https://github.com/user-attachments/assets/5befdb30-17a4-42fe-98d2-8edd116ecd64" />
