@@ -1,4 +1,4 @@
-<img width="594" height="534" alt="image" src="https://github.com/user-attachments/assets/fec27636-13b4-470e-8aaf-87ed23eb5ab5" /><img width="920" height="498" alt="image" src="https://github.com/user-attachments/assets/f8b7805b-86aa-41c8-baa1-27fb5e38d61b" /># Tempus Fugit: 4 Walkthrough 
+# Tempus Fugit: 4 Walkthrough 
 
 # Description
 ```bash
