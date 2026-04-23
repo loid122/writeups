@@ -1,4 +1,4 @@
-<img width="1707" height="762" alt="image" src="https://github.com/user-attachments/assets/343e58eb-4ab1-484f-8fbb-833e25985399" /><img width="1646" height="745" alt="image" src="https://github.com/user-attachments/assets/38ccd26b-aaa3-4177-a759-5045eb0c0506" /><img width="1646" height="745" alt="image" src="https://github.com/user-attachments/assets/26f7d9d5-b7e5-46c6-9d88-02ea6798733d" /># Tempus Fugit: 3 Walkthrough
+# Tempus Fugit: 3 Walkthrough
 # Description
 ```bash
 Tempus Fugit is a Latin phrase that roughly translated as “time flies”.
