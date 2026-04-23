@@ -111,7 +111,7 @@ Then i add that cookie and i can access the shell page
 \
 <img width="1688" height="553" alt="image" src="https://github.com/user-attachments/assets/7350b148-cbe2-4802-9545-aa874e993113" />
 \
-After looking at a hint , i understood that there was a Flask Jinja Template injection in the base4 decoded version of the "Auth" cookie
+After looking at a hint , i understood that there was a Flask Jinja Template injection in the base64 decoded version of the "Auth" cookie
 \
 <img width="1679" height="604" alt="image" src="https://github.com/user-attachments/assets/f6480332-fc92-4978-bc3e-658dcd5dedf9" />
 \
