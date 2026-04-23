@@ -54,19 +54,26 @@ When i entered a random endpoint to access
 \
 <img width="1707" height="762" alt="image" src="https://github.com/user-attachments/assets/250977ec-6337-45ee-b5f4-3611ceba9363" />
 \
-Using dirb i found another endpoint
-\
-<img width="473" height="335" alt="image" src="https://github.com/user-attachments/assets/1b2538b5-cfca-4b7e-bf6a-f7089a1defb8" />
-\
 Since the page was displaying the "path i gave after /" i thought it could be SSTI and tested it
-\
-<img width="926" height="705" alt="image" src="https://github.com/user-attachments/assets/dcadac6a-4874-4a8c-bcc0-15499bc6e489" />
 \
 And it was Jinja ssti and i followed "https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Python.md"
 \
 <img width="1702" height="690" alt="image" src="https://github.com/user-attachments/assets/15504597-75d9-430c-995e-cbb3cb6f9950" />
 \
-Then i found this from the cheatsheet and used the payload <img width="802" height="77" alt="image" src="https://github.com/user-attachments/assets/3368a570-6abf-4b5f-928e-9af752cc5e6b" />
+
+When i first checked if i could access the builtin functions and see which all were supported
+\
+<img width="519" height="124" alt="image" src="https://github.com/user-attachments/assets/5befdb30-17a4-42fe-98d2-8edd116ecd64" />
+\
+There were a lot 
+\
+<img width="1693" height="677" alt="image" src="https://github.com/user-attachments/assets/5a07465e-42c3-4d34-a628-16f5b9f38a80" />
+\
+So i copied it to a notepad file and searched for "__import"" 
+\
+<img width="1076" height="507" alt="image" src="https://github.com/user-attachments/assets/516af5a8-bbaf-413f-bd42-baaa6682150e" />
+\
+And it was there so i could use the next payload i found this from the cheatsheet and used the payload <img width="802" height="77" alt="image" src="https://github.com/user-attachments/assets/3368a570-6abf-4b5f-928e-9af752cc5e6b" />
 
 \
 <img width="1240" height="774" alt="image" src="https://github.com/user-attachments/assets/9c0efaca-45af-4fb2-8842-f57899ab7ce3" />
