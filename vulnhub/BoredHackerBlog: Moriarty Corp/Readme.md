@@ -504,3 +504,4 @@ Now we got another flag and after entering that , we get
 \
 <img width="1165" height="389" alt="image" src="https://github.com/user-attachments/assets/3135fad9-e1be-429c-9bf9-0a1a8b52dd59" />
 \
+After this , we just search for known RCE exploit of "Elasticsearch" and get the final flag.
