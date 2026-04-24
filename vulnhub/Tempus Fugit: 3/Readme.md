@@ -342,3 +342,13 @@ admin : S0secretPassW0rd
 \
 <img width="1707" height="631" alt="image" src="https://github.com/user-attachments/assets/d520050c-496e-436f-857d-67d0f6faf930" />
 \
+Then after searching around , i checked if we could upload any files , only here we could upload a module
+\
+<img width="1679" height="731" alt="image" src="https://github.com/user-attachments/assets/49abcea7-4fd4-49bb-9235-a95388835ae0" />
+\
+I thought that i can get Command execution similar to how we get on wordpress 
+\
+First we take zip file of a sample module , then edit it to execute our payload and then rezip it and upload 
+\
+So here i used this module sample "https://processwire.com/modules/helloworld/" 
+\
