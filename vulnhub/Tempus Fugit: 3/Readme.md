@@ -1,4 +1,4 @@
-# Tempus Fugit: 3 Walkthrough
+<img width="452" height="215" alt="image" src="https://github.com/user-attachments/assets/6c311d46-e9b0-4964-a16e-f605cd6b025c" /># Tempus Fugit: 3 Walkthrough
 # Description
 ```bash
 Tempus Fugit is a Latin phrase that roughly translated as “time flies”.
@@ -78,4 +78,198 @@ And it was there so i could use the next payload i found this from the cheatshee
 
 \
 <img width="1240" height="774" alt="image" src="https://github.com/user-attachments/assets/9c0efaca-45af-4fb2-8842-f57899ab7ce3" />
+\
+So now , we have Remote Code Execution
+\
+Then i checked  files in current dir
+\
+<img width="452" height="215" alt="image" src="https://github.com/user-attachments/assets/2dc512bd-aeb1-4d11-9a8c-dbe84d133ca3" />
+\
+```bash
+from flask import Flask, render_template
+import flask, flask_login
+from urllib.parse import unquote
+from pysqlcipher3 import dbapi2 as sqlcipher
+
+
+app = Flask(__name__)
+app.secret_key = "RmxhZzF7IEltcG9ydGFudCBmaW5kaW5ncyB9"
+
+pra = 'pragma key="SecretssecretsSecrets..."'
+
+try:
+  with app.open_resource("static/file/f") as f:
+    contents = f.read().decode('utf-8')
+except:
+    contents = ''    
+
+
+
+def check(username):
+    con = sqlcipher.connect('static/db2.db')
+    con.execute(pra)
+    userexists = False
+    with con:
+                cur = con.cursor()
+                cur.execute('SELECT * FROM Users')
+                rows = cur.fetchall()
+                for row in rows:
+                    uname = row[0]
+                    if uname==username:
+                        userexists=True
+    return userexists
+
+def validate(username, password):
+    con = sqlcipher.connect('static/db2.db')
+    con.execute(pra)
+    completion = False
+    with con:
+                cur = con.cursor()
+                cur.execute('SELECT * FROM Users')
+                rows = cur.fetchall()
+                for row in rows:
+                    uname = row[0]
+                    pw = row[1]
+                    if uname==username:
+                        completion=check_password(password, pw)
+    return completion
+
+def check_password(hashed_password, user_password):
+   
+    return hashed_password == user_password
+    
+
+login_manager = flask_login.LoginManager()
+
+login_manager.init_app(app)
+
+class User(flask_login.UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def user_loader(email):
+    
+    if check(email) ==False:
+
+
+        return
+
+    user = User()
+    user.id = email
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+    email = flask.request.form.get("email")
+    if not check(email):
+   
+        return
+
+    user = User()
+    user.id = email
+
+
+    return user
+
+
+
+@app.route("/index.html")
+@app.route("/")
+def index():
+     return render_template("index.html")
+
+   
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    print('Login')
+    if flask.request.method == "POST":
+      
+        username = flask.request.form["email"]
+        password = flask.request.form["password"]
+        completion = validate(username, password)
+        if completion == False:
+            return render_template("unauth.html")
+        else:
+             user = User()
+             user.id = username
+             flask_login.login_user(user)
+
+             return flask.redirect(flask.url_for("protected"))
+
+    
+    return render_template("bad.html")
+   
+
+
+
+@app.route("/protected")
+@flask_login.login_required
+def protected():
+  
+    return render_template("protected.html", luser = flask_login.current_user.id, contents=contents )
+
+@app.route("/logout")
+def logout():
+    flask_login.logout_user()
+    return render_template("logout.html")
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return render_template("unauth.html")
+
+@app.errorhandler(404)
+def not_found(e):
+     message = unquote(flask.request.url)
+     message =  flask.render_template_string(message)
+     return render_template("404.html", dir=dir,
+        help=help,
+        locals=locals, message=message), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+
+    return flask.redirect(flask.url_for("login"))
+
+
+
+
+if __name__ == "__main__":
+    app.run()
+```
+\
+Secret key when decoded
+\
+<img width="776" height="52" alt="image" src="https://github.com/user-attachments/assets/ea3005e8-7e6a-4323-855b-8db31628f9d9" />
+\
+Using this payload i got a terminal reverse shell
+\
+<img width="562" height="53" alt="image" src="https://github.com/user-attachments/assets/dd25431d-cd69-4f0b-93d4-3463da9c679b" />
+\
+Since the code used sqlcipher to connect , the service should be there
+\
+<img width="425" height="77" alt="image" src="https://github.com/user-attachments/assets/f765ad0f-56f8-4c22-b88d-a01bc9b3c0f5" />
+\
+<img width="896" height="82" alt="image" src="https://github.com/user-attachments/assets/ea780654-151f-44b9-8fb9-d03317141c93" />
+\
+Now we interact with the db
+\
+<img width="681" height="149" alt="image" src="https://github.com/user-attachments/assets/ed386414-0e5b-40a7-9eea-5e37fb634f71" />
+\
+<img width="364" height="92" alt="image" src="https://github.com/user-attachments/assets/a5f8e12c-74b6-4768-a5b0-b43d1504b545" />
+\
+Another Flag
+\
+<img width="808" height="54" alt="image" src="https://github.com/user-attachments/assets/de352a8a-a73d-4aa0-9035-c3e51d19a9ea" />
+\
+After loggin in with pws and accessing /protected
+\
+<img width="1393" height="617" alt="image" src="https://github.com/user-attachments/assets/ff22e896-ba45-49e6-8745-bcf052479bf8" />
+\
+Actually in the page source there was another string
+\
+<img width="1263" height="160" alt="image" src="https://github.com/user-attachments/assets/35f03b04-1a95-4ff7-93a6-47de17f1b640" />
+\
+<img width="1074" height="52" alt="image" src="https://github.com/user-attachments/assets/7c29b10f-c471-49bd-92eb-a42f2203e712" />
 \
